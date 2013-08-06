@@ -1,0 +1,4 @@
+PWrRssReaderAndroid
+===================
+
+PWrRssReader Android application
