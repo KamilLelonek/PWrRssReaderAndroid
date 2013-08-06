@@ -4,7 +4,6 @@
     android:id="@+id/listItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?android:attr/listChoiceBackgroundIndicator"
     android:orientation="horizontal"
     android:padding="5dp"
     tools:ignore="HardcodedText" >
