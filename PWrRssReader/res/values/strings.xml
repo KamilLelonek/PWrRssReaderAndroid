@@ -1,0 +1,91 @@
+<resources>
+
+    <string name="app_name">PWrRssReader</string>
+
+    <!-- Menus -->
+    <string name="menu_moreover">Main menu</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_dismiss">Dismiss</string>
+    <string name="menu_mark_as_read">Mark as read</string>
+    <string name="menu_keep_as_unread">Keep as unread</string>
+    <string name="menu_copy">Copy url to clipboard</string>
+    <string name="menu_share_with">Share with&#8230;</string>
+
+    <!-- Menu Sliding -->
+    <string name="menu_channels">CHANNELS</string>
+    <string name="menu_display">DISPLAY</string>
+    <string name="menu_onlySelected">Selected only</string>
+    <string name="menu_all">All</string>
+    <string name="menu_read">Read</string>
+    <string name="menu_unread">Unread</string>
+    <string name="menu_refresh_list_view">Refresh list</string>
+
+    <!-- Menu List -->
+    <string name="menu_mark_all_as_read">Mark all as read</string>
+    <string name="menu_refresh">Refresh</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_title_buttons">Management</string>
+    <string name="menu_title_about">About</string>
+    <string name="menu_description_about">This application was created for students at the Wrocław University of Technology. 
+        \nIf you are intrested in developing it please send me an email.</string>
+
+    <!-- Cards -->
+    <string name="card_description">Content</string>
+
+    <!-- Toasts -->
+    <string name="toast_url_copied_to_clipboard">Url copied to clipboard</string>
+    <string name="message_refreshing_feeds_list">Refreshing list view&#8230;</string>
+    <string name="message_feeds_list_updated">Feeds list updated</string>
+
+    <!-- Alerts -->
+    <string name="alert_internet_connection_title">Device is offline</string>
+    <string name="alert_internet_connection_body">Internet connection is not available. Please open settings to enable internet connection</string>
+
+    <!-- Preferences -->
+    <string name="preference_auto_refresh">Auto refresh</string>
+    <string name="preference_auto_refresh_summary">Allow app to automaticaly download new feeds once in a specified period of time</string>
+    <string name="preference_period">Refresh period</string>
+    <string name="preference_notifications">Notifications</string>
+    <string name="preference_notifications_summary_checked">You will be notified by:&#160;</string>
+    <string name="preference_notifications_summary_unchecked">You won\'t be notified about new feeds</string>
+    <string name="preference_notifications_led">Led</string>
+    <string name="preference_notifications_led_summary">Led will be blinking on notification</string>
+    <string name="preference_notifications_sound">Sound</string>
+    <string name="preference_notifications_sound_summary">Play sound after receiving notification</string>
+    <string name="preference_notifications_vibration">Vibration</string>
+    <string name="preference_notifications_vibration_summary">Device vibrates when notification appears</string>
+    <string name="preference_auto_mark_as_read">Auto mark as read</string>
+    <string name="preference_auto_mark_as_read_summary">Once feed is opened in detailded view mark it automatically as read</string>
+    <string name="preference_keep_read_feeds">Keep unread feeds</string>
+    <string name="preference_keep_read_feeds_summary">Even when feed is read it is still shown on list</string>
+    <string name="preference_refreshing">Refreshing</string>
+    <string name="preference_extras">Extras</string>
+
+    <plurals name="preference_period_summary">
+        <item quantity="one">Refresh period is now set to one minute at least</item>
+        <item quantity="other">Refresh period is now set to %s minutes at least</item>
+    </plurals>
+
+    <!-- UndoBar -->
+    <string name="undobar_message_dismissed">Dismissed</string>
+    <string name="undobar_message_read_one">Marked as read</string>
+    <string name="undobar_message_unread">Marked as unread</string>
+    <string name="undobar_message_read_all">All marked as read</string>
+    <string name="undobar_message_read_channel">Channel marked as read</string>
+    <string name="undobar_message_deleted_selected">Selected dismissed</string>
+    <string name="undobar_message_read_selected">Selected marked as read</string>
+    <string name="undobar_message_feed_dismissed">Feed dismissed</string>
+
+    <!-- ContentDescriptions -->
+    <string name="contentDescription_splashScreen">Splash screen</string>
+    <string name="contentDescription_channel_eStudent">eStudent</string>
+    <string name="contentDescription_channel_PWr">PWr</string>
+    <string name="contentDescription_channel_NaPWr">NaPWr</string>
+    <string name="contentDescription_channel_Samorzad">Student\nGovernment</string>
+    <string name="contentDescription_menu_mail">Send mail</string>
+    <string name="contentDescription_menu_expand">Expand about</string>
+    <string name="contentDescription_menu_stripe">Menu stripe</string>
+    <string name="contentDescription_feedImage">Feed image</string>
+    <string name="contentDescription_toast_refresh">Toast refresh</string>
+
+</resources>

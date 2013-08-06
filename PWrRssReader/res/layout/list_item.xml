@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/listItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/listChoiceBackgroundIndicator"
+    android:orientation="horizontal"
+    android:padding="5dp"
+    tools:ignore="HardcodedText" >
+
+    <ImageView
+        android:id="@+id/imageViewFeedImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:contentDescription="@string/contentDescription_feedImage"
+        android:src="@drawable/channel_pwr" />
+
+    <TextView
+        android:id="@+id/textViewFeedTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/imageViewFeedImage"
+        android:minLines="1"
+        android:singleLine="true"
+        android:text="Bardzo długi tekst prezentujący tytuł artykułu"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewChannelSite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewFeedTitle"
+        android:layout_below="@+id/textViewFeedTitle"
+        android:singleLine="true"
+        android:text="http://www.bardzo_długi_link.pl"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textViewFeedDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textViewChannelSite"
+        android:fontFamily="sans-serif-light"
+        android:singleLine="true"
+        android:text="Czwartek, 25 Maja, 14:34"
+        android:textStyle="italic" />
+
+</RelativeLayout>

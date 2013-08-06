@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <string name="undo_button">Cofnij</string>
+    <string name="undo_button_all">Cofnij wszystko</string>
+
+</resources>

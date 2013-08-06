@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <string name="undo_button">Undo</string>
+    <string name="undo_button_all">Undo all</string>
+
+</resources>

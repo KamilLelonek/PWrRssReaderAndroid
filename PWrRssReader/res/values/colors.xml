@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="actionbar_text">@android:color/white</color>
+    <color name="blue_light">#00BBFF</color>
+    <color name="blue_dark">#0099CC</color>
+    <color name="blue_selected">#ff7cc9e5</color>
+    <color name="gray_light">#C4C4C4</color>
+
+</resources>

@@ -1,0 +1,92 @@
+<resources>
+
+    <string name="app_name">PWrRssReader</string>
+
+    <!-- Menus -->
+    <string name="menu_moreover">Menu</string>
+    <string name="menu_search">Szukaj</string>
+    <string name="menu_dismiss">Odrzuć</string>
+    <string name="menu_mark_as_read">Oznacz jako przeczytane</string>
+    <string name="menu_keep_as_unread">Keep as unread</string>
+    <string name="menu_copy">Link skopiowany do schowka</string>
+    <string name="menu_share_with">Podziel się&#8230;</string>
+
+    <!-- Menu Sliding -->
+    <string name="menu_channels">KANAŁY</string>
+    <string name="menu_display">WIDOK</string>
+    <string name="menu_onlySelected">Tylko zaznaczone</string>
+    <string name="menu_all">Wszystkie</string>
+    <string name="menu_read">Przeczytane</string>
+    <string name="menu_unread">Nieprzeczytane</string>
+    <string name="menu_refresh_list_view">Odśwież listę</string>
+
+    <!-- Menu List -->
+    <string name="menu_mark_all_as_read">Oznacz wszystkie jako przeczytane</string>
+    <string name="menu_refresh">Odśwież</string>
+    <string name="menu_settings">Ustawienia</string>
+    <string name="menu_title_buttons">Zarządzanie</string>
+    <string name="menu_title_about">Informacje</string>
+    <string name="menu_description_about">Ta aplikacja została stworzona dla studentów Politechniki Wrocławskiej.
+        \nJeśli jesteś zainteresowany jej rozwojem, napisz mi maila.</string>
+
+    <!-- Cards -->
+    <string name="card_description">Treść</string>
+
+    <!-- Toasts -->
+    <string name="toast_url_copied_to_clipboard">Link skopiowany do schowka</string>
+    <string name="message_refreshing_feeds_list">Odświeżanie listy&#8230;</string>
+    <string name="message_feeds_list_updated">Newsy zaktualizowane</string>
+
+    <!-- Alerts -->
+    <string name="alert_internet_connection_title">Urządzenie jest offline</string>
+    <string name="alert_internet_connection_body">Połączenie internetowe jest nie dostępne. Otwórz ustawienia, żeby je włączyć.</string>
+
+    <!-- Preferences -->
+    <string name="preference_auto_refresh">Automatyczne odwieżanie</string>
+    <string name="preference_auto_refresh_summary">Pozwól aplikacji co jakiś czas aktualizować listę wiadomości</string>
+    <string name="preference_period">Cykl odświeżania</string>
+    <string name="preference_notifications">Powiadomienia</string>
+    <string name="preference_notifications_summary_checked">Będziesz powiadamiany przez:&#160;</string>
+    <string name="preference_notifications_summary_unchecked">Nie będziesz powiadamiany o nowych wiadomościach</string>
+    <string name="preference_notifications_led">Dioda</string>
+    <string name="preference_notifications_led_summary">Dioda będzie mrugać przy powiadomieniu</string>
+    <string name="preference_notifications_sound">Dźwięk</string>
+    <string name="preference_notifications_sound_summary">Dźwięk będzie odtwarzany przy powiadomieniu</string>
+    <string name="preference_notifications_vibration">Wibracje</string>
+    <string name="preference_notifications_vibration_summary">Urządzenie będzie wibrować kiedy pojawi się powiadomienie</string>
+    <string name="preference_auto_mark_as_read">Automatycznie oznaczaj jako przeczytane</string>
+    <string name="preference_auto_mark_as_read_summary">Po otworzeniu wiadomości, zostanie automatycznie oznaczona jako przeczytana</string>
+    <string name="preference_keep_read_feeds">Przechowuj przeczytane wiadomości</string>
+    <string name="preference_keep_read_feeds_summary">Nawet jeśli wiadomość jest przeczytana, nadal będzie widoczna na liście</string>
+    <string name="preference_refreshing">Odświeżanie</string>
+    <string name="preference_extras">Pozostałe</string>
+
+    <plurals name="preference_period_summary">
+        <item quantity="one">Cykl odświeżania ustawiony jest na conajmniej jedną minutę</item>
+        <item quantity="few">Cykl odświeżania ustawiony jest na conajmniej %s minuty</item>
+        <item quantity="many">Cykl odświeżania ustawiony jest na conajmniej %s minut</item>
+    </plurals>
+
+    <!-- UndoBar -->
+    <string name="undobar_message_dismissed">Odrzucona</string>
+    <string name="undobar_message_read_one">Przeczytana</string>
+    <string name="undobar_message_unread">Zachowana jako nieprzeczytana</string>
+    <string name="undobar_message_read_all">Wszystkie oznaczone jako przeczytane</string>
+    <string name="undobar_message_read_channel">Kanał oznaczony jako przeczytany</string>
+    <string name="undobar_message_deleted_selected">Wybrane odrzucone</string>
+    <string name="undobar_message_read_selected">Wybrane oznaczone jako przeczytane</string>
+    <string name="undobar_message_feed_dismissed">Wiadomość odrzucona</string>
+
+    <!-- ContentDescriptions -->
+    <string name="contentDescription_splashScreen">Splash screen</string>
+    <string name="contentDescription_channel_eStudent">eStudent</string>
+    <string name="contentDescription_channel_PWr">PWr</string>
+    <string name="contentDescription_channel_NaPWr">NaPWr</string>
+    <string name="contentDescription_channel_Samorzad">Samorząd Studencki</string>
+    <string name="contentDescription_menu_mail">Wyślij maila</string>
+    <string name="contentDescription_menu_expand">Rozwiń informacje</string>
+    <string name="contentDescription_menu_stripe">Pasek menu</string>
+    <string name="contentDescription_feedImage">Obrazek wiadomości</string>
+    <string name="contentDescription_toast_refresh">Ikona toast</string>
+
+</resources>

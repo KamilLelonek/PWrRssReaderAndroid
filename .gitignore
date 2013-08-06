@@ -13,8 +13,21 @@ bin/
 gen/
 
 # Local configuration file (sdk path, etc)
+.cache
 local.properties
 
 # Eclipse project files
-.classpath
+proguard_cache/
+proguard_cache_conf/
+.settings/
+.metadata/
 .project
+.cache
+
+# IntelliJ project files
+.idea/
+.idea_modules
+
+#everything else
+desktop.ini
+.dropbox

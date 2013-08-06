@@ -1,0 +1,67 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:animateLayoutChanges="true"
+    android:clickable="true"
+    android:orientation="vertical"
+    tools:ignore="UseCompoundDrawables" >
+
+    <LinearLayout
+        android:id="@+id/aboutHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:gravity="center_vertical" >
+
+        <ImageView
+            android:id="@+id/expandCollapse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/menu_mail"
+            android:contentDescription="@string/contentDescription_menu_expand"
+            android:src="@drawable/ic_expand" />
+
+        <TextView
+            style="@style/textStyleBlueHeader"
+            android:text="@string/menu_title_about" />
+    </LinearLayout>
+
+    <include layout="@layout/divider_horizontal" />
+
+    <LinearLayout
+        android:id="@+id/aboutDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" >
+
+        <View
+            android:id="@+id/viewAboutStripe"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@color/blue_light" />
+
+        <TextView
+            android:id="@+id/textViewAboutDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:fontFamily="sans-serif-thin"
+            android:text="@string/menu_description_about"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <ImageView
+            android:id="@+id/imageViewMail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/menu_mail"
+            android:contentDescription="@string/contentDescription_menu_mail"
+            android:paddingBottom="10dp"
+            android:src="@drawable/ic_email" />
+    </LinearLayout>
+
+</LinearLayout>
