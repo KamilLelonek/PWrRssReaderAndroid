@@ -11,12 +11,14 @@ import java.io.BufferedReader
 import android.util.Log
 
 object HttpConnection {
-	final lazy val GET_ALL_FEEDS = "http://pwrrssreader.herokuapp.com/feeds"
+	// final lazy val GET_FEEDS_FROM = "http://192.168.1.110:9000/feedsFrom/"
 	final lazy val GET_FEEDS_FROM = "http://pwrrssreader.herokuapp.com/feedsFrom/";
 	final lazy val EMPTY_JSON = "{}"
 	private final lazy val TIMEOUT = 10 * 1000 // 10s
 
-	def openInputStream(lastUpdateTime: Long) = {
+	def getInputString(lastUpdateTime: Long) = inputStreamToString(openInputStream(lastUpdateTime))
+
+	private def openInputStream(lastUpdateTime: Long) = {
 		try {
 			val url = new URL(GET_FEEDS_FROM + lastUpdateTime)
 			val urlConnection = url.openConnection.asInstanceOf[HttpURLConnection]
@@ -31,8 +33,6 @@ object HttpConnection {
 			}
 		}
 	}
-
-	def getInputString(lastUpdateTime: Long) = inputStreamToString(openInputStream(lastUpdateTime))
 
 	private def inputStreamToString(is: InputStream) = {
 		val inputStreamReader = new InputStreamReader(is)

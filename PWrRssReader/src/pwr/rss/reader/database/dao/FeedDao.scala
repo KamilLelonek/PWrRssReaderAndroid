@@ -279,5 +279,16 @@ class FeedDao(private val database: SQLiteDatabase) extends DAO(database) {
 	  * ******** DELETE ********
 	  * ************************
 	  */
+	def removeReadFeeds = {
+		val cursor = getFeedsCursor(READ, false, "")
+		if (cursor.moveToFirst) {
+			do {
+				val idIndex = cursor.getColumnIndex(SQLQueries.ID)
+				val id = cursor.getLong(idIndex)
+				deleteFeed(id)
+			} while (cursor.moveToNext)
+		}
+
+	}
 	def deleteFeed(feedID: Long) = super.delete(TABLE_NAME_FEEDS, feedID)
 }

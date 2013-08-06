@@ -57,7 +57,7 @@
     <string name="preference_auto_mark_as_read">Auto mark as read</string>
     <string name="preference_auto_mark_as_read_summary">Once feed is opened in detailded view mark it automatically as read</string>
     <string name="preference_keep_read_feeds">Keep unread feeds</string>
-    <string name="preference_keep_read_feeds_summary">Even when feed is read it is still shown on list</string>
+    <string name="preference_keep_read_feeds_summary">Even when feed is read it will be maintained after application close</string>
     <string name="preference_refreshing">Refreshing</string>
     <string name="preference_extras">Extras</string>
 
@@ -87,5 +87,6 @@
     <string name="contentDescription_menu_stripe">Menu stripe</string>
     <string name="contentDescription_feedImage">Feed image</string>
     <string name="contentDescription_toast_refresh">Toast refresh</string>
+    <string name="contentDescription_scroll">Scroll to top</string>
 
 </resources>

@@ -14,6 +14,7 @@ import android.view.KeyEvent
 import pwr.rss.reader.fragments.FeedsListFragment
 
 class FeedsListActivity extends SlidingFragmentActivity with OnMenuListActionListener {
+	private lazy val application = getApplication.asInstanceOf[ApplicationObject]
 	private lazy val fragmentManager = getSupportFragmentManager
 	private lazy val feedsListFragment =
 		fragmentManager.findFragmentById(R.id.feed_list_fragment).asInstanceOf[FeedsListFragment]
@@ -21,7 +22,7 @@ class FeedsListActivity extends SlidingFragmentActivity with OnMenuListActionLis
 
 	override def onCreate(savedInstanceState: Bundle) = {
 		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_main)
+		setContentView(R.layout.activity_feeds_list)
 		setBehindContentView(R.layout.menu_frame)
 
 		configureSlidingMenu
@@ -69,5 +70,10 @@ class FeedsListActivity extends SlidingFragmentActivity with OnMenuListActionLis
 			true
 		}
 		else super.onKeyDown(keyCode, event);
+	}
+
+	override def onDestroy = {
+		super.onDestroy
+		application.performCleanUp
 	}
 }

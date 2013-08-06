@@ -12,6 +12,8 @@ import pwr.rss.reader.views.ViewHelper._
 import android.content.Intent
 import android.net.Uri
 import pwr.rss.reader.utils.CursorFetcher
+import android.text.Html
+import android.text.method.LinkMovementMethod
 
 class DescriptionCard(cursor: Cursor, context: Context) extends MyCard(cursor, context) {
 
@@ -24,8 +26,9 @@ class DescriptionCard(cursor: Cursor, context: Context) extends MyCard(cursor, c
 
 	protected def configureView(view: View) = {
 		val description = findView[TextView](view, R.id.card_description)
-		description.setText(cursorFetcher.getDescription)
+		description.setText(Html.fromHtml(cursorFetcher.getDescription))
 		description.setTextColor(cursorFetcher.getTextColor)
+		description.setMovementMethod(LinkMovementMethod.getInstance)
 	}
 
 	override def onClick(v: View) = {

@@ -48,6 +48,7 @@ class ApplicationObject extends Application {
 	private lazy val databaseManager = new DataBaseManager(this)
 	private var filterQuery = ""
 
+	def performCleanUp = if (!keepFeedsAsRead) databaseManager.removeReadFeeds
 	def getCurrentCursor: Cursor = databaseManager.getCurrentCursor(filterQuery)
 	def setFilterQuery(query: String) = filterQuery = query
 

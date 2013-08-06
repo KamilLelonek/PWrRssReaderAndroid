@@ -154,14 +154,17 @@ public class FeedDetailsFragment extends SherlockFragment implements SateliteCli
 	private void configureItems(SatelliteMenu menu) {
 		List<SatelliteMenuItem> items = new ArrayList<SatelliteMenuItem>();
 		
-		SatelliteMenuItem readUnreadMenuItem = null;
-		if (cursorFetcher.isRead()) {
-			readUnreadMenuItem = new SatelliteMenuItem(MENU_KEEP_AS_UNREAD, R.drawable.ic_keep_as_unread);
+		if (applicationObject.keepFeedsAsRead()) {
+			SatelliteMenuItem readUnreadMenuItem = null;
+			if (cursorFetcher.isRead()) {
+				readUnreadMenuItem = new SatelliteMenuItem(MENU_KEEP_AS_UNREAD, R.drawable.ic_keep_as_unread);
+			}
+			else {
+				readUnreadMenuItem = new SatelliteMenuItem(MENU_MARK_AS_READ, R.drawable.ic_mark_as_read);
+			}
+			items.add(readUnreadMenuItem);
 		}
-		else {
-			readUnreadMenuItem = new SatelliteMenuItem(MENU_MARK_AS_READ, R.drawable.ic_mark_as_read);
-		}
-		items.add(readUnreadMenuItem);
+		
 		items.add(new SatelliteMenuItem(MENU_DISMISS, R.drawable.ic_dismiss));
 		items.add(new SatelliteMenuItem(MENU_COPY_URL, R.drawable.ic_copy_url));
 		items.add(new SatelliteMenuItem(MENU_OPEN_BROWSER, R.drawable.ic_open_in_browser));

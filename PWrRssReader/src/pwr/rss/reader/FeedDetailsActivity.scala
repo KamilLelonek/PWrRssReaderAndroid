@@ -1,31 +1,33 @@
 package pwr.rss.reader
 
+import java.io.Serializable
+import java.util.ArrayList
+
 import com.actionbarsherlock.app.SherlockFragmentActivity
 import com.actionbarsherlock.view.MenuItem
 import com.viewpagerindicator.UnderlinePageIndicator
-import android.content.Intent
-import android.os.Bundle
-import android.support.v4.view.ViewPager
-import pwr.rss.reader.database.adapters.FeedDetailsPageAdapter
-import pwr.rss.reader.web.DownloadService
-import pwr.rss.reader.fragments.FeedsListFragment
-import pwr.rss.reader.views.ViewHelper._
-import pwr.rss.reader.utils.BackgroundTasker._
-import pwr.rss.reader.fragments.FeedDetailsFragment
 import undobar.controller.library.UndoBarController
 import undobar.controller.library.UndoBarListener
-import java.io.Serializable
-import pwr.rss.reader.database.dao.Feed
-import android.view.ViewGroup
-import android.os.Handler
-import android.content.IntentFilter
-import android.support.v4.content.LocalBroadcastManager
+
 import android.content.BroadcastReceiver
 import android.content.Context
-import android.view.KeyEvent
-import java.util.ArrayList
+import android.content.Intent
+import android.content.IntentFilter
+import android.os.Bundle
+import android.support.v4.content.LocalBroadcastManager
+import android.support.v4.view.ViewPager
+import android.support.v4.view.ViewPager.SimpleOnPageChangeListener
 
-class FeedDetailsActivity extends SherlockFragmentActivity with UndoBarListener {
+import pwr.rss.reader.database.adapters.FeedDetailsPageAdapter
+import pwr.rss.reader.database.dao.Feed
+import pwr.rss.reader.fragments.FeedDetailsFragment
+import pwr.rss.reader.fragments.FeedsListFragment
+import pwr.rss.reader.utils.BackgroundTasker.performDelayed
+import pwr.rss.reader.views.ViewHelper.findView
+import pwr.rss.reader.web.DownloadService
+
+class FeedDetailsActivity extends SherlockFragmentActivity
+		with UndoBarListener {
 	private lazy val application = getApplication.asInstanceOf[ApplicationObject]
 	private lazy val cursor = application.getCurrentCursor
 	private lazy val fragmentManager = getSupportFragmentManager
@@ -36,10 +38,17 @@ class FeedDetailsActivity extends SherlockFragmentActivity with UndoBarListener 
 	private lazy val flagAction = getIntent.getStringExtra(FeedDetailsFragment.FLAG_ACTION)
 	private lazy val feed = getIntent.getSerializableExtra(FeedDetailsFragment.FEED).asInstanceOf[Feed]
 	private lazy val localBroadcastManager = LocalBroadcastManager.getInstance(this)
+
 	private lazy val downloadFinishedReceiver = new BroadcastReceiver {
-		override def onReceive(context: Context, intent: Intent) =
-			if (DownloadService.ACTION_DOWNLOAD_COMPLETED.equals(intent.getAction))
+		override def onReceive(context: Context, ent: Intent) =
+			if (DownloadService.ACTION_DOWNLOAD_COMPLETED.equals(ent.getAction))
 				restart
+	}
+	private lazy val pageChangeListener = new SimpleOnPageChangeListener {
+		override def onPageSelected(position: Int) = {
+			getIntent.putExtra(FeedsListFragment.FLAG_POSITION, position)
+			if (application.autoMarkAsRead) markFeedAsRead(position)
+		}
 	}
 
 	override def onCreate(savedInstanceState: Bundle) = {
@@ -48,6 +57,7 @@ class FeedDetailsActivity extends SherlockFragmentActivity with UndoBarListener 
 		setContentView(R.layout.activity_feed_details)
 		viewPager.setAdapter(pageAdapter)
 		viewIndicator.setViewPager(viewPager)
+		viewIndicator.setOnPageChangeListener(pageChangeListener)
 		undoBarController.registerUndoBarListener(this)
 		this.localBroadcastManager.registerReceiver(downloadFinishedReceiver,
 			new IntentFilter(DownloadService.ACTION_DOWNLOAD_COMPLETED))
@@ -67,14 +77,14 @@ class FeedDetailsActivity extends SherlockFragmentActivity with UndoBarListener 
 		this.localBroadcastManager.unregisterReceiver(downloadFinishedReceiver)
 	}
 
-	def showDelayedUndoBar = performDelayed(showUndoBar)
+	private def showDelayedUndoBar = performDelayed(showUndoBar)
 
-	def setCurrentItemInPager = {
+	private def setCurrentItemInPager = {
 		val currentItemPosition = getIntent.getIntExtra(FeedsListFragment.FLAG_POSITION, 1)
 		viewPager.setCurrentItem(currentItemPosition)
 	}
 
-	def showUndoBar() = {
+	private def showUndoBar() = {
 		flagAction match {
 			case FeedDetailsFragment.FLAG_READ => undoBarController.showUndoBar(null, R.string.undobar_message_read_one)
 			case FeedDetailsFragment.FLAG_UNREAD => undoBarController.showUndoBar(null, R.string.undobar_message_unread)
@@ -101,7 +111,7 @@ class FeedDetailsActivity extends SherlockFragmentActivity with UndoBarListener 
 		overridePendingTransition(0, 0)
 	}
 
-	def getSelfIntent = {
+	private def getSelfIntent = {
 		val currentItemPosition = getIntent.getIntExtra(FeedsListFragment.FLAG_POSITION, 1)
 		val selfIntent = new Intent(FeedDetailsActivity.this, classOf[FeedDetailsActivity])
 		selfIntent.putExtra(FeedsListFragment.FLAG_POSITION, currentItemPosition);
@@ -114,6 +124,12 @@ class FeedDetailsActivity extends SherlockFragmentActivity with UndoBarListener 
 			case _ =>
 		}
 		true
+	}
+
+	private def markFeedAsRead(position: Int) = {
+		cursor.moveToPosition(position)
+		val currentFeed = application.getFeed(cursor)
+		application.markFeedAsRead(currentFeed)
 	}
 
 	private def getFragment = {

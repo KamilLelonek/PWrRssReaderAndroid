@@ -57,7 +57,7 @@
     <string name="preference_auto_mark_as_read">Automatycznie oznaczaj jako przeczytane</string>
     <string name="preference_auto_mark_as_read_summary">Po otworzeniu wiadomości, zostanie automatycznie oznaczona jako przeczytana</string>
     <string name="preference_keep_read_feeds">Przechowuj przeczytane wiadomości</string>
-    <string name="preference_keep_read_feeds_summary">Nawet jeśli wiadomość jest przeczytana, nadal będzie widoczna na liście</string>
+    <string name="preference_keep_read_feeds_summary">Nawet jeśli wiadomość jest przeczytana, nadal będzie widoczna na liście po restarcie aplikacji</string>
     <string name="preference_refreshing">Odświeżanie</string>
     <string name="preference_extras">Pozostałe</string>
 
@@ -88,5 +88,6 @@
     <string name="contentDescription_menu_stripe">Pasek menu</string>
     <string name="contentDescription_feedImage">Obrazek wiadomości</string>
     <string name="contentDescription_toast_refresh">Ikona toast</string>
+    <string name="contentDescription_scroll">Przewiń do góry</string>
 
 </resources>

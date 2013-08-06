@@ -26,7 +26,7 @@ class PreferencesManager(context: Context) {
 	def setSelectedOnlyChecked(isChecked: Boolean) =
 		putValueToPreferences(KEY_SHOW_SELECTED_ONLY, isChecked)
 
-	def getLastUpdateDate = getString(KEY_LAST_UPDATED)
+	def getLastUpdateDate = getLong(KEY_LAST_UPDATED)
 	def setLastUpdateDate =
 		putValueToPreferences(KEY_LAST_UPDATED, System.currentTimeMillis)
 
@@ -44,5 +44,5 @@ class PreferencesManager(context: Context) {
 	}
 
 	private def getBoolean(key: String) = sharedPreferences.getBoolean(key, false)
-	private def getString(key: String) = sharedPreferences.getLong(key, 0L)
+	private def getLong(key: String) = sharedPreferences.getLong(key, 0L)
 }

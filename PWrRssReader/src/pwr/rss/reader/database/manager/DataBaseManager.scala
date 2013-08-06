@@ -37,6 +37,7 @@ class DataBaseManager(context: Context) {
 	/**
 	  * Feed DAO methods
 	  */
+	def removeReadFeeds = feedDao.removeReadFeeds
 	def addFeed(feed: Feed) = if (feed != null) feedDao.addFeed(feed) else 0L
 	def addFeeds(feeds: ArrayList[Feed]) = if (feeds != null) feeds foreach { feed => addFeed(feed) } else 0L
 	def deleteFeed(feedID: Long) = feedDao.deleteFeed(feedID)
