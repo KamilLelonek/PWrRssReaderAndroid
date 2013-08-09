@@ -189,7 +189,7 @@ public class IcsSpinner extends IcsAbsSpinner implements OnClickListener {
 			final int childBaseline = child.getBaseline();
 			return childBaseline >= 0 ? child.getTop() + childBaseline : -1;
 		}
-		else return -1;
+		return -1;
 	}
 	
 	@Override
@@ -537,7 +537,7 @@ public class IcsSpinner extends IcsAbsSpinner implements OnClickListener {
 		public boolean areAllItemsEnabled() {
 			final ListAdapter adapter = mListAdapter;
 			if (adapter != null) return adapter.areAllItemsEnabled();
-			else return true;
+			return true;
 		}
 		
 		/**
@@ -548,7 +548,7 @@ public class IcsSpinner extends IcsAbsSpinner implements OnClickListener {
 		public boolean isEnabled(int position) {
 			final ListAdapter adapter = mListAdapter;
 			if (adapter != null) return adapter.isEnabled(position);
-			else return true;
+			return true;
 		}
 		
 		@Override

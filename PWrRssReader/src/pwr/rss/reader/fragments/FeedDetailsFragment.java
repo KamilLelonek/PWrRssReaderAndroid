@@ -219,7 +219,7 @@ public class FeedDetailsFragment extends SherlockFragment implements SateliteCli
 	}
 	
 	private void showCopiedUrlToast() {
-		applicationObject.toastFactory().showBottomToast(R.string.toast_url_copied_to_clipboard);
+		applicationObject.showBottomToast(R.string.toast_url_copied_to_clipboard);
 	}
 	
 	private void dismissFeed() {

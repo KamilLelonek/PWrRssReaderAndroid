@@ -69,6 +69,7 @@
             android:id="@+id/buttonRefreshListView"
             style="@style/ButtonMenuSliding"
             android:layout_width="match_parent"
+            android:layout_marginBottom="10dp"
             android:text="@string/menu_refresh_list_view" />
     </LinearLayout>
 

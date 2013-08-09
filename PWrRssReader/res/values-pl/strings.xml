@@ -41,6 +41,9 @@
     <string name="alert_internet_connection_title">Urządzenie jest offline</string>
     <string name="alert_internet_connection_body">Połączenie internetowe jest nie dostępne. Otwórz ustawienia, żeby je włączyć.</string>
 
+    <!-- Notifications -->
+    <string name="notification_text">Nowe nieprzeczytane wiadomości</string>
+
     <!-- Preferences -->
     <string name="preference_auto_refresh">Automatyczne odwieżanie</string>
     <string name="preference_auto_refresh_summary">Pozwól aplikacji co jakiś czas aktualizować listę wiadomości</string>

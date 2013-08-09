@@ -302,7 +302,7 @@ public abstract class IcsAbsSpinner extends IcsAdapterView<SpinnerAdapter> {
 	@Override
 	public View getSelectedView() {
 		if (mItemCount > 0 && mSelectedPosition >= 0) return getChildAt(mSelectedPosition - mFirstPosition);
-		else return null;
+		return null;
 	}
 	
 	/**

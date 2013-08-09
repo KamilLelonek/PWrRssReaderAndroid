@@ -107,9 +107,14 @@ class PreferencesActivity extends SherlockPreferenceActivity with OnSharedPrefer
 
 	override def onMenuItemSelected(featureId: Int, item: MenuItem) = {
 		item.getItemId match {
-			case android.R.id.home => finish
+			case android.R.id.home => onBackPressed
 			case _ =>
 		}
 		true
+	}
+
+	override def onBackPressed = {
+		finish
+		overridePendingTransition(0, 0)
 	}
 }

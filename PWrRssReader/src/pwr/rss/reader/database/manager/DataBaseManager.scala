@@ -2,8 +2,12 @@ package pwr.rss.reader.database.manager
 
 import java.lang.Long
 import java.util.ArrayList
+
+import scala.collection.JavaConversions.asScalaBuffer
+
 import android.content.Context
 import android.database.Cursor
+import pwr.rss.reader.ApplicationObject
 import pwr.rss.reader.R
 import pwr.rss.reader.data.dao.ChannelDao
 import pwr.rss.reader.data.dao.FeedDao
@@ -12,9 +16,6 @@ import pwr.rss.reader.data.dao.FeedDao.READ
 import pwr.rss.reader.data.dao.FeedDao.UNREAD
 import pwr.rss.reader.database.dao.Channel
 import pwr.rss.reader.database.dao.Feed
-import pwr.rss.reader.utils.PreferencesManager
-import collection.JavaConversions._
-import pwr.rss.reader.ApplicationObject
 
 object DataBaseManager {
 	def apply(context: Context) = new DataBaseManager(context)

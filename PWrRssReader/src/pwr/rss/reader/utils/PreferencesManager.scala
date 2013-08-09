@@ -9,20 +9,20 @@ import java.util.Date
 class PreferencesManager(context: Context) {
 	private lazy val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-	def isAutoRefreshEnabled = getBoolean(KEY_AUTO_REFRESH)
+	def isAutoRefreshEnabled = getBooleanOrTrue(KEY_AUTO_REFRESH)
 	def getRefreshPeriod = sharedPreferences.getString(KEY_REFRESH_PERIOD, "10")
-	def areNotificationsEnabled = getBoolean(KEY_NOTIFICATIONS)
-	def isNotificationLedEnabled = getBoolean(KEY_NOTIFICATIONS_LED)
-	def isNotificationVibrateEnabled = getBoolean(KEY_NOTIFICATIONS_SOUND)
-	def isNotificationSoundEnabled = getBoolean(KEY_NOTIFICATIONS_VIBRATIONS)
-	def autoMarkAsRead = getBoolean(KEY_AUTO_MARK_AS_READ)
-	def keepFeedsAsRead = getBoolean(KEY_KEEP_READ_FEEDS)
+	def areNotificationsEnabled = getBooleanOrTrue(KEY_NOTIFICATIONS)
+	def isNotificationLedEnabled = getBooleanOrTrue(KEY_NOTIFICATIONS_LED)
+	def isNotificationVibrateEnabled = getBooleanOrTrue(KEY_NOTIFICATIONS_VIBRATIONS)
+	def isNotificationSoundEnabled = getBooleanOrTrue(KEY_NOTIFICATIONS_SOUND)
+	def keepFeedsAsRead = getBooleanOrTrue(KEY_KEEP_READ_FEEDS)
+	def autoMarkAsRead = getBooleanOrFalse(KEY_AUTO_MARK_AS_READ)
 
 	def getSelectedRadioButtonId = sharedPreferences.getInt(KEY_CHECKED_RADIO_BUTTON, R.id.radioButtonAll)
 	def setSelectedRadioButtonId(radioButtonId: Int) =
 		putValueToPreferences(KEY_CHECKED_RADIO_BUTTON, radioButtonId)
 
-	def isSelectedOnlyChecked = getBoolean(KEY_SHOW_SELECTED_ONLY)
+	def isSelectedOnlyChecked = getBooleanOrFalse(KEY_SHOW_SELECTED_ONLY)
 	def setSelectedOnlyChecked(isChecked: Boolean) =
 		putValueToPreferences(KEY_SHOW_SELECTED_ONLY, isChecked)
 
@@ -43,6 +43,7 @@ class PreferencesManager(context: Context) {
 		sharedPrefEditor.commit
 	}
 
-	private def getBoolean(key: String) = sharedPreferences.getBoolean(key, false)
+	private def getBooleanOrFalse(key: String) = sharedPreferences.getBoolean(key, false)
+	private def getBooleanOrTrue(key: String) = sharedPreferences.getBoolean(key, true)
 	private def getLong(key: String) = sharedPreferences.getLong(key, 0L)
 }

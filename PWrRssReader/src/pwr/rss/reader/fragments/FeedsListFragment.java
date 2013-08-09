@@ -82,8 +82,12 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 	private final BroadcastReceiver downloadFinishedReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			if (DownloadService.ACTION_DOWNLOAD_COMPLETED.equals(intent.getAction())) {
-				applicationObject.toastFactory().showBottomToast(R.string.message_feeds_list_updated);
+			String receivedIntent = intent.getAction();
+			if (DownloadService.ACTION_DOWNLOAD_COMPLETED.equals(receivedIntent)) {
+				applicationObject.showBottomToast(R.string.message_feeds_list_updated);
+			}
+			else if (DownloadService.ACTION_DEVICE_OFFLINE.equals(receivedIntent)) {
+				showAlertDialog();
 			}
 			restartLoader();
 		}
@@ -147,11 +151,14 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 		this.undoBarController = new UndoBarController(listView);
 		this.undoBarController.registerUndoBarListener(this);
 		this.localBroadcastManager.registerReceiver(downloadFinishedReceiver, getIntentFilterForBroadcastReceiver());
+		this.dialogFragmentInternetConnection = new DialogFragmentInternetConnection();
+		this.fragmentManager = getFragmentManager();
 	}
 	
 	private IntentFilter getIntentFilterForBroadcastReceiver() {
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(DownloadService.ACTION_DOWNLOAD_COMPLETED);
+		intentFilter.addAction(DownloadService.ACTION_DEVICE_OFFLINE);
 		intentFilter.addAction(ACTION_REFRESH);
 		return intentFilter;
 	}
@@ -177,18 +184,6 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 	/***************************************
 	 ************* UNDO ACTIONS ************
 	 ***************************************/
-	
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		undoBarController.onSaveInstanceState(outState);
-	}
-	
-	@Override
-	public void onViewStateRestored(Bundle savedInstanceState) {
-		super.onViewStateRestored(savedInstanceState);
-		undoBarController.onRestoreInstanceState(savedInstanceState);
-	}
 	
 	@Override
 	public void onUndo(Serializable token) {
@@ -274,9 +269,9 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 	}
 	
 	private void showAlertDialog() {
-		fragmentManager = getFragmentManager();
-		dialogFragmentInternetConnection = new DialogFragmentInternetConnection();
-		dialogFragmentInternetConnection.show(fragmentManager, "DialogFragmentInternetConnection");
+		if (!dialogFragmentInternetConnection.isAdded()) {
+			dialogFragmentInternetConnection.show(fragmentManager, "DialogFragmentInternetConnection");
+		}
 	}
 	
 	@Override
@@ -361,7 +356,7 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 	
 	@Override
 	public void notifyMenuRefresh() {
-		applicationObject.toastFactory().showBottomToast(R.string.message_refreshing_feeds_list);
+		applicationObject.showBottomToast(R.string.message_refreshing_feeds_list);
 		refresh();
 	}
 	
@@ -411,10 +406,16 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 		}
 		else {
 			uncolorAndClearAllItems();
-			actionMode.finish();
+			finishActionMode();
 		}
 		
 		return true;
+	}
+	
+	private void finishActionMode() {
+		actionMode.finish();
+		actionMode = null;
+		activity.getSupportActionBar().setDisplayShowCustomEnabled(true);
 	}
 	
 	private void switchActionMode() {
@@ -571,7 +572,7 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 	private void clearCheckedItemsIfNoSelection() {
 		if (noItemSelected()) {
 			checkedItems.clear();
-			actionMode.finish();
+			finishActionMode();
 		}
 	}
 	

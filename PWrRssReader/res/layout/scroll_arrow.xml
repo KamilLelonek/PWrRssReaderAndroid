@@ -8,4 +8,4 @@
     android:layout_marginRight="20dp"
     android:background="@drawable/scroll_to_top"
     android:contentDescription="@string/contentDescription_scroll"
-    android:src="@drawable/ic_action_ic_scroll" />
+    android:src="@drawable/ic_scroll" />

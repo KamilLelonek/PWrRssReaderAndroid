@@ -16,7 +16,6 @@ import android.widget.RadioGroup
 import pwr.rss.reader.ApplicationObject
 import pwr.rss.reader.FeedsListActivity
 import pwr.rss.reader.R
-import pwr.rss.reader.utils.PreferencesManager
 import pwr.rss.reader.views.ChannelView
 import pwr.rss.reader.views.ViewHelper.findView
 
@@ -28,7 +27,6 @@ class SlideMenuFragment extends SherlockFragment
 	private lazy val activity = getActivity.asInstanceOf[FeedsListActivity]
 	private lazy val view = getView
 	private lazy val applicationObject = activity.getApplication.asInstanceOf[ApplicationObject]
-	private lazy val preferencesManager = new PreferencesManager(activity)
 	private lazy val channelsContainer = view.findViewById(R.id.container_channels).asInstanceOf[LinearLayout]
 
 	override def onActivityCreated(savedInstanceState: Bundle) = {
@@ -70,11 +68,11 @@ class SlideMenuFragment extends SherlockFragment
 	private def configureCheckBox(view: View) = {
 		val checkBoxSelectedOnly = findView[CheckBox](view, R.id.checkBoxSelectedOnly)
 		checkBoxSelectedOnly.setOnCheckedChangeListener(this)
-		checkBoxSelectedOnly.setChecked(preferencesManager.isSelectedOnlyChecked)
+		checkBoxSelectedOnly.setChecked(applicationObject.isSelectedOnlyChecked)
 	}
 
 	override def onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) =
-		preferencesManager.setSelectedOnlyChecked(isChecked)
+		applicationObject.setSelectedOnlyChecked(isChecked)
 
 	/**
 	  * RadioGroup read type
@@ -86,13 +84,13 @@ class SlideMenuFragment extends SherlockFragment
 	}
 
 	private def configureRadioButtons(group: RadioGroup) = {
-		val radioId = preferencesManager.getSelectedRadioButtonId
+		val radioId = applicationObject.getSelectedRadioButtonId
 		val radioButton = findView[RadioButton](group, radioId)
 		radioButton.setChecked(true)
 	}
 
 	override def onCheckedChanged(group: RadioGroup, checkedId: Int) =
-		preferencesManager.setSelectedRadioButtonId(checkedId)
+		applicationObject.setSelectedRadioButtonId(checkedId)
 
 	/**
 	  * Button refresh list
@@ -109,5 +107,5 @@ class SlideMenuFragment extends SherlockFragment
 	}
 
 	private def showRefreshToast =
-		applicationObject.toastFactory.showBottomToast(R.string.message_refreshing_feeds_list)
+		applicationObject.showBottomToast(R.string.message_refreshing_feeds_list)
 }

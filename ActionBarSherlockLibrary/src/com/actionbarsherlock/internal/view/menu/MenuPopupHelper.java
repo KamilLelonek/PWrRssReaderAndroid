@@ -131,6 +131,7 @@ public class MenuPopupHelper implements AdapterView.OnItemClickListener, View.On
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onDismiss() {
 		mPopup = null;
@@ -205,6 +206,7 @@ public class MenuPopupHelper implements AdapterView.OnItemClickListener, View.On
 	@Override
 	public void onViewAttachedToWindow(View v) {}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onViewDetachedFromWindow(View v) {
 		if (mTreeObserver != null) {

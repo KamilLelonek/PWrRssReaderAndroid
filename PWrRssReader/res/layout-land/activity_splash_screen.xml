@@ -19,6 +19,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:indeterminateDrawable="@drawable/progress_background"
-        android:padding="10dp" />
+        android:padding="15dp" />
 
 </FrameLayout>

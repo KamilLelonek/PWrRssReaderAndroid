@@ -87,7 +87,9 @@ import com.actionbarsherlock.view.CollapsibleActionView;
  * <p>
  * For information about using {@code SearchView}, read the
  * <a href="{@docRoot}, read the <a
- * href="{@docRoot}guide/topics/search/index.html">Search</a> developer guide.
+ * href="{@docRoot}, read the <a
+ * href="{@docRoot}, read the <a href="{@docRoot}
+ * guide/topics/search/index.html">Search</a> developer guide.
  * </p>
  * </div>
  * 
@@ -465,7 +467,7 @@ public class SearchView extends LinearLayout implements CollapsibleActionView {
 			}
 			return result;
 		}
-		else return super.requestFocus(direction, previouslyFocusedRect);
+		return super.requestFocus(direction, previouslyFocusedRect);
 	}
 	
 	/** @hide */

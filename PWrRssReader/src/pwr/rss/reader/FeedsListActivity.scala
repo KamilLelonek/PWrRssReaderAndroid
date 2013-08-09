@@ -12,13 +12,19 @@ import android.support.v4.app.FragmentTransaction
 import pwr.rss.reader.fragments.ListMenuFragment
 import android.view.KeyEvent
 import pwr.rss.reader.fragments.FeedsListFragment
+import pwr.rss.reader.fragments.ListMenuFragmentICS
+import pwr.rss.reader.fragments.ListMenuFragmentGB
 
 class FeedsListActivity extends SlidingFragmentActivity with OnMenuListActionListener {
 	private lazy val application = getApplication.asInstanceOf[ApplicationObject]
 	private lazy val fragmentManager = getSupportFragmentManager
-	private lazy val feedsListFragment =
-		fragmentManager.findFragmentById(R.id.feed_list_fragment).asInstanceOf[FeedsListFragment]
+	private lazy val feedsListFragment = fragmentManager.findFragmentById(R.id.feed_list_fragment).asInstanceOf[FeedsListFragment]
 	private lazy val slidingMenuFragment = new SlideMenuFragment
+	private lazy val menuFragment =
+		if (isOverICS)
+			(new ListMenuFragmentICS().setOnMenuActionListener(this))
+		else
+			(new ListMenuFragmentGB().setOnMenuActionListener(this))
 
 	override def onCreate(savedInstanceState: Bundle) = {
 		super.onCreate(savedInstanceState)
@@ -53,13 +59,14 @@ class FeedsListActivity extends SlidingFragmentActivity with OnMenuListActionLis
 	override def onOptionsItemSelected(item: MenuItem) = {
 		item.getItemId match {
 			case android.R.id.home => showMenu
-			case R.id.menu_list_moreover =>
-				(new ListMenuFragment(this)).show(fragmentManager, "menu")
+			case R.id.menu_list_moreover => menuFragment.show(fragmentManager, "menu")
 			case _ =>
 		}
 
 		true
 	}
+
+	private def isOverICS = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH
 
 	override def notifyMenuRefresh = feedsListFragment.notifyMenuRefresh
 	override def notifyMenuMarkAllAsRead = feedsListFragment.notifyMenuMarkAllAsRead

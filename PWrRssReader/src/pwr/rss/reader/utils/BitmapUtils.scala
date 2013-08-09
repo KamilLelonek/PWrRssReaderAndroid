@@ -22,6 +22,7 @@ object BitmapUtils {
 }
 
 class BitmapUtils(context: Context) {
+	def getBitmapFromResource(resourceId: Int) = BitmapFactory.decodeResource(context.getResources, resourceId)
 	/**
 	  * Deleting bitmap from file
 	  */

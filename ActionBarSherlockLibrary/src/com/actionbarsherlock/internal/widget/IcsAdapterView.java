@@ -47,6 +47,7 @@ import android.widget.Spinner;
  * </p>
  * </div>
  */
+@SuppressWarnings("deprecation")
 public abstract class IcsAdapterView<T extends Adapter> extends ViewGroup {
 	
 	/**
@@ -548,7 +549,7 @@ public abstract class IcsAdapterView<T extends Adapter> extends ViewGroup {
 		T adapter = getAdapter();
 		int selection = getSelectedItemPosition();
 		if (adapter != null && adapter.getCount() > 0 && selection >= 0) return adapter.getItem(selection);
-		else return null;
+		return null;
 	}
 	
 	/**

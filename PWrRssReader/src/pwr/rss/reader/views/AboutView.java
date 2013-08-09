@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 public class AboutView extends LinearLayout implements OnClickListener {
+	private static final boolean isOverICS = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH;
 	private ImageView expandCollapse;
 	private ImageView imageViewMail;
 	private LinearLayout aboutHeader;
@@ -48,6 +49,10 @@ public class AboutView extends LinearLayout implements OnClickListener {
 		aboutDescription = (LinearLayout) findViewById(R.id.aboutDescription);
 		aboutHeader = (LinearLayout) findViewById(R.id.aboutHeader);
 		aboutHeader.setOnClickListener(this);
+		
+		if (!isOverICS) {
+			aboutDescription.setVisibility(View.VISIBLE);
+		}
 	}
 	
 	private void setView(Context context) {
@@ -82,7 +87,7 @@ public class AboutView extends LinearLayout implements OnClickListener {
 	
 	@Override
 	public void onClick(View v) {
-		if (!expanding) {
+		if (!expanding && isOverICS) {
 			int imageResource = 0;
 			
 			if (!expanded) {

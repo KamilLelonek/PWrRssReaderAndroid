@@ -13,6 +13,7 @@ import pwr.rss.reader.database.dao.Feed
 import pwr.rss.reader.database.manager.DataBaseManager
 import pwr.rss.reader.utils.ToastFactory
 import pwr.rss.reader.utils.PreferencesManager
+import pwr.rss.reader.notifications.NotificationsManager
 
 class ApplicationObject extends Application {
 	/**
@@ -30,15 +31,20 @@ class ApplicationObject extends Application {
 	def isNotificationSoundEnabled = preferencesManager.isNotificationSoundEnabled
 	def autoMarkAsRead = preferencesManager.autoMarkAsRead
 	def getSelectedRadioButtonId = preferencesManager.getSelectedRadioButtonId
+	def setSelectedRadioButtonId(id: Int) = preferencesManager.setSelectedRadioButtonId(id)
 	def isSelectedOnlyChecked = preferencesManager.isSelectedOnlyChecked
+	def setSelectedOnlyChecked(value: Boolean) = preferencesManager.setSelectedOnlyChecked(value)
 	def keepFeedsAsRead = preferencesManager.keepFeedsAsRead
+	def getLastUpdateDate = preferencesManager.getLastUpdateDate
+	def setLastUpdateDate = preferencesManager.setLastUpdateDate
 
 	/**
 	  * ************************************************
 	  * ************* Singletons Manager ***************
 	  * ************************************************
 	  */
-	lazy val toastFactory = ToastFactory(this)
+	private lazy val toastFactory = ToastFactory(this)
+	def showBottomToast(messageId: Int) = toastFactory.showBottomToast(messageId)
 
 	/**
 	  * ************************************************
@@ -72,12 +78,17 @@ class ApplicationObject extends Application {
 	  * ************************************************
 	  */
 	private lazy val activityManager = getSystemService(Context.ACTIVITY_SERVICE).asInstanceOf[ActivityManager]
+	private lazy val notificationsManager = NotificationsManager(this)
+
+	def showNotification(count: Int) =
+		if (isAppRunningInBackground && areNotificationsEnabled)
+			notificationsManager.showNotification(count)
 	/**
 	  * Checks if application is displayed on screen.
 	  *
-	  * @return true if application is not visible on screen
+	  * @return true if application is NOT visible on screen
 	  */
-	def isAppRunningInBackground = {
+	private def isAppRunningInBackground = {
 		val topTask = activityManager.getRunningTasks(1)
 		val topActivity = topTask.get(0).topActivity
 		val currentActivityPackageName = topActivity.getPackageName

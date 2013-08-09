@@ -59,6 +59,7 @@ import com.actionbarsherlock.widget.ActivityChooserModel.ActivityChooserModelCli
  * 
  * @hide
  */
+@SuppressWarnings("deprecation")
 class ActivityChooserView extends ViewGroup implements ActivityChooserModelClient {
 	
 	/**
@@ -96,11 +97,6 @@ class ActivityChooserView extends ViewGroup implements ActivityChooserModelClien
 	 * The default activities action button;
 	 */
 	private final FrameLayout mDefaultActivityButton;
-	
-	/**
-	 * The image for the default activities action button;
-	 */
-	private final ImageView mDefaultActivityButtonImage;
 	
 	/**
 	 * The maximal width of the list popup.
@@ -172,11 +168,6 @@ class ActivityChooserView extends ViewGroup implements ActivityChooserModelClien
 	 */
 	private boolean mIsAttachedToWindow;
 	
-	/**
-	 * String resource for formatting content description of the default target.
-	 */
-	private int mDefaultActionButtonContentDescription;
-	
 	private final Context mContext;
 	
 	/**
@@ -231,7 +222,6 @@ class ActivityChooserView extends ViewGroup implements ActivityChooserModelClien
 		mDefaultActivityButton = (FrameLayout) findViewById(R.id.abs__default_activity_button);
 		mDefaultActivityButton.setOnClickListener(mCallbacks);
 		mDefaultActivityButton.setOnLongClickListener(mCallbacks);
-		mDefaultActivityButtonImage = (ImageView) mDefaultActivityButton.findViewById(R.id.abs__image);
 		
 		mExpandActivityOverflowButton = (FrameLayout) findViewById(R.id.abs__expand_activities_button);
 		mExpandActivityOverflowButton.setOnClickListener(mCallbacks);
@@ -477,9 +467,7 @@ class ActivityChooserView extends ViewGroup implements ActivityChooserModelClien
 	 * 
 	 * @param resourceId The resource id.
 	 */
-	public void setDefaultActionButtonContentDescription(int resourceId) {
-		mDefaultActionButtonContentDescription = resourceId;
-	}
+	public void setDefaultActionButtonContentDescription(int resourceId) {}
 	
 	/**
 	 * Gets the list popup window which is lazily initialized.
@@ -665,7 +653,7 @@ class ActivityChooserView extends ViewGroup implements ActivityChooserModelClien
 		@Override
 		public int getItemViewType(int position) {
 			if (mShowFooterView && position == getCount() - 1) return ITEM_VIEW_TYPE_FOOTER;
-			else return ITEM_VIEW_TYPE_ACTIVITY;
+			return ITEM_VIEW_TYPE_ACTIVITY;
 		}
 		
 		@Override
@@ -793,10 +781,6 @@ class ActivityChooserView extends ViewGroup implements ActivityChooserModelClien
 		
 		public int getActivityCount() {
 			return mDataModel.getActivityCount();
-		}
-		
-		public int getHistorySize() {
-			return mDataModel.getHistorySize();
 		}
 		
 		public int getMaxActivityCount() {

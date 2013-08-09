@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import pwr.rss.reader.ApplicationObject;
 import pwr.rss.reader.database.dao.Feed;
 import pwr.rss.reader.json.PWrJSONParser;
-import pwr.rss.reader.utils.PreferencesManager;
 import android.app.IntentService;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
@@ -13,11 +12,12 @@ import android.support.v4.content.LocalBroadcastManager;
 public class DownloadService extends IntentService {
 	public static final String ACTION_DOWNLOAD_COMPLETED = "pwr.rss.reader.action.download_completed";
 	public static final String ACTION_START_DOWNLOAD = "pwr.rss.reader.action.start_download";
+	public static final String ACTION_DEVICE_OFFLINE = "pwr.rss.reader.action.device_offline";
 	
 	private ApplicationObject applicationObject;
 	private LocalBroadcastManager localBroadcastManager;
 	private Intent downloadCompletedBroadcast;
-	private PreferencesManager preferencesManager;
+	private Intent downloadAbortedBroadcast;
 	
 	private volatile boolean isDownloading = false;
 	
@@ -31,7 +31,7 @@ public class DownloadService extends IntentService {
 		this.applicationObject = (ApplicationObject) getApplication();
 		this.localBroadcastManager = LocalBroadcastManager.getInstance(this);
 		this.downloadCompletedBroadcast = new Intent(ACTION_DOWNLOAD_COMPLETED);
-		this.preferencesManager = new PreferencesManager(this);
+		this.downloadAbortedBroadcast = new Intent(ACTION_DEVICE_OFFLINE);
 	}
 	
 	@Override
@@ -46,6 +46,13 @@ public class DownloadService extends IntentService {
 			downloadData();
 			this.isDownloading = false;
 		}
+		else {
+			notifyDeviceOffline();
+		}
+	}
+	
+	private void notifyDeviceOffline() {
+		localBroadcastManager.sendBroadcast(downloadAbortedBroadcast);
 	}
 	
 	private boolean canUpdateFeeds() {
@@ -57,12 +64,19 @@ public class DownloadService extends IntentService {
 	}
 	
 	private void downloadData() {
-		long lastUpdateTime = preferencesManager.getLastUpdateDate();
+		long lastUpdateTime = applicationObject.getLastUpdateDate();
 		String inputString = HttpConnection.getInputString(lastUpdateTime);
 		ArrayList<Feed> feeds = PWrJSONParser.getFeeds(inputString);
-		applicationObject.addFeeds(feeds);
-		preferencesManager.setLastUpdateDate();
+		updateFeedsData(feeds);
 		notifyDownloadCompleted();
+	}
+	
+	private void updateFeedsData(ArrayList<Feed> feeds) {
+		if (feeds != null && !feeds.isEmpty()) {
+			applicationObject.addFeeds(feeds);
+			applicationObject.showNotification(feeds.size());
+			applicationObject.setLastUpdateDate();
+		}
 	}
 	
 	private void notifyDownloadCompleted() {
