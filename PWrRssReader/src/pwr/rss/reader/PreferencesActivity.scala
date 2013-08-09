@@ -25,10 +25,10 @@ object PreferencesActivity {
 	final lazy val KEY_KEEP_READ_FEEDS = "preference_keep_read_feeds"
 	final lazy val KEY_LAST_UPDATED = "preference_last_updated"
 
-	private final val DEFAULT_REFRESH_PERIOD = "10"
+	private final lazy val DEFAULT_REFRESH_PERIOD = "24"
 }
 
-class PreferencesActivity extends SherlockPreferenceActivity with OnSharedPreferenceChangeListener {
+class PreferencesActivity extends GeneralPreferenceActivity with OnSharedPreferenceChangeListener {
 	private lazy val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 	private lazy val notificationsSet = new HashSet[String]
 
@@ -37,9 +37,12 @@ class PreferencesActivity extends SherlockPreferenceActivity with OnSharedPrefer
 
 	override def onCreate(savedInstanceState: Bundle) = {
 		super.onCreate(savedInstanceState)
-		addPreferencesFromResource(R.xml.preferences)
-		getSupportActionBar.setDisplayHomeAsUpEnabled(true)
-		getSupportActionBar.setIcon(R.drawable.ic_preferences)
+		if (FeedsListActivity.NEW_API)
+			addPreferencesFromResource(R.xml.preferences_hc)
+		else {
+			addPreferencesFromResource(R.xml.preferences_gb)
+			preferenceNotifications.setSummary(R.string.preference_notifications_summary)
+		}
 	}
 
 	override def onResume = {
@@ -48,7 +51,7 @@ class PreferencesActivity extends SherlockPreferenceActivity with OnSharedPrefer
 			.registerOnSharedPreferenceChangeListener(this)
 
 		configureRefreshPeriod
-		configureNotificationsType
+		if (FeedsListActivity.NEW_API) configureNotificationsType
 	}
 
 	override def onPause = {
@@ -104,17 +107,4 @@ class PreferencesActivity extends SherlockPreferenceActivity with OnSharedPrefer
 				| `KEY_NOTIFICATIONS_VIBRATIONS` => configureNotifications(key)
 			case _ =>
 		}
-
-	override def onMenuItemSelected(featureId: Int, item: MenuItem) = {
-		item.getItemId match {
-			case android.R.id.home => onBackPressed
-			case _ =>
-		}
-		true
-	}
-
-	override def onBackPressed = {
-		finish
-		overridePendingTransition(0, 0)
-	}
 }

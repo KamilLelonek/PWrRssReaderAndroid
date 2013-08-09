@@ -37,6 +37,7 @@
             android:clearTaskOnLaunch="true"
             android:launchMode="singleTop" />
         <activity android:name=".FeedDetailsActivity" />
+        <activity android:name=".PreferencesNotificationActivity" />
         <activity android:name=".PreferencesActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MANAGE_NETWORK_USAGE" />

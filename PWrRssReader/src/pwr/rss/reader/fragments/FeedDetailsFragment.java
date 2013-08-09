@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pwr.rss.reader.ApplicationObject;
+import pwr.rss.reader.FeedsListActivity;
 import pwr.rss.reader.R;
 import pwr.rss.reader.cards.DescriptionCard;
 import pwr.rss.reader.cards.ImageCard;
@@ -12,6 +13,7 @@ import pwr.rss.reader.cards.RowCard;
 import pwr.rss.reader.database.dao.Feed;
 import pwr.rss.reader.database.tables.TableFeeds;
 import pwr.rss.reader.utils.CursorFetcher;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -201,11 +203,12 @@ public class FeedDetailsFragment extends SherlockFragment implements SateliteCli
 		}
 	}
 	
+	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")
 	private void saveUrlToClipboard() {
 		String feedUrl = cursorFetcher.getFeedLink();
 		
-		if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+		if (!FeedsListActivity.NEW_API()) {
 			android.text.ClipboardManager clipboard = (android.text.ClipboardManager) activity
 				.getSystemService(Context.CLIPBOARD_SERVICE);
 			clipboard.setText(feedUrl);

@@ -65,8 +65,8 @@
     <string name="preference_extras">Extras</string>
 
     <plurals name="preference_period_summary">
-        <item quantity="one">Refresh period is now set to one minute at least</item>
-        <item quantity="other">Refresh period is now set to %s minutes at least</item>
+        <item quantity="one">Refresh period is now set to one hour at least</item>
+        <item quantity="other">Refresh period is now set to %s hours at least</item>
     </plurals>
 
     <!-- UndoBar -->

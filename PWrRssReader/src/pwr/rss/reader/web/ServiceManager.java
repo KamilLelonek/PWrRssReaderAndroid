@@ -3,32 +3,47 @@ package pwr.rss.reader.web;
 import pwr.rss.reader.ApplicationObject;
 import pwr.rss.reader.PreferencesActivity;
 import android.app.AlarmManager;
+import android.app.IntentService;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 
-public class ServiceManager extends Service implements OnSharedPreferenceChangeListener {
+public class ServiceManager extends IntentService implements OnSharedPreferenceChangeListener {
+	
 	private SharedPreferences sharedPreferences;
 	private AlarmManager alarmManager;
 	private ApplicationObject applicationObject;
 	private PendingIntent startDownloadServicePendingIntent;
 	private Context context;
 	private Intent wakeReceiverBroadcast;
+	private Handler handler;
+	private Runnable startServiceRunnable;
+	
+	public ServiceManager() {
+		super("ServiceManager");
+	}
 	
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		this.context = getApplicationContext();
+		this.handler = new Handler();
 		this.applicationObject = (ApplicationObject) context;
 		this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 		this.sharedPreferences.registerOnSharedPreferenceChangeListener(this);
 		this.alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+		this.startServiceRunnable = new Runnable() {
+			@Override
+			public void run() {
+				sendBroadcast(wakeReceiverBroadcast);
+			}
+		};
 		createWakeReceiverBroadcast();
 		
 	}
@@ -42,20 +57,16 @@ public class ServiceManager extends Service implements OnSharedPreferenceChangeL
 	/**
 	 * Depends on received intent manageServices can stop or start data updates.
 	 */
-	
 	@Override
-	public int onStartCommand(Intent intent, int flags, int startId) {
+	protected void onHandleIntent(Intent intent) {
 		startDownloadUpdateRequest();
-		return Service.START_STICKY;
 	}
 	
 	private void startDownloadUpdateRequest() {
 		if (isAutoRefreshEnabled()) {
 			startDownloadUpdateRequest(getAutoRefreshTimeCycle());
 		}
-		else {
-			sendBroadcast(wakeReceiverBroadcast);
-		}
+		handler.postDelayed(startServiceRunnable, 3 * 1000);
 	}
 	
 	private boolean isAutoRefreshEnabled() {
@@ -67,16 +78,16 @@ public class ServiceManager extends Service implements OnSharedPreferenceChangeL
 	}
 	
 	private void startDownloadUpdateRequest(int cycle) {
-		alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(),
-			minutesToMiliseconds(cycle), startDownloadServicePendingIntent);
+		alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(),
+			hoursToMilliseconds(cycle), startDownloadServicePendingIntent);
 	}
 	
 	/**
 	 * Converts provided by user (convenient to him) time to more accuracy for
 	 * AlarmManager usage.
 	 * */
-	private int minutesToMiliseconds(int minutes) {
-		return minutes * 60 * 1000;
+	private int hoursToMilliseconds(int hours) {
+		return hours * 60/*minutes*/* 60/*seconds*/* 1000/*milliseconds*/;
 	}
 	
 	@Override

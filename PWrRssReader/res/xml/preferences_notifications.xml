@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/preference_notifications" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="preference_notifications_led"
+            android:summary="@string/preference_notifications_led_summary"
+            android:title="@string/preference_notifications_led" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="preference_notifications_sound"
+            android:summary="@string/preference_notifications_sound_summary"
+            android:title="@string/preference_notifications_sound" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="preference_notifications_vibrations"
+            android:summary="@string/preference_notifications_vibration_summary"
+            android:title="@string/preference_notifications_vibration" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -49,6 +49,7 @@
     <string name="preference_auto_refresh_summary">Pozwól aplikacji co jakiś czas aktualizować listę wiadomości</string>
     <string name="preference_period">Cykl odświeżania</string>
     <string name="preference_notifications">Powiadomienia</string>
+    <string name="preference_notifications_summary">Określ jak chcesz być powiadamiany</string>
     <string name="preference_notifications_summary_checked">Będziesz powiadamiany przez:&#160;</string>
     <string name="preference_notifications_summary_unchecked">Nie będziesz powiadamiany o nowych wiadomościach</string>
     <string name="preference_notifications_led">Dioda</string>
@@ -65,9 +66,9 @@
     <string name="preference_extras">Pozostałe</string>
 
     <plurals name="preference_period_summary">
-        <item quantity="one">Cykl odświeżania ustawiony jest na conajmniej jedną minutę</item>
-        <item quantity="few">Cykl odświeżania ustawiony jest na conajmniej %s minuty</item>
-        <item quantity="many">Cykl odświeżania ustawiony jest na conajmniej %s minut</item>
+        <item quantity="one">Cykl odświeżania ustawiony jest na conajmniej jedną godzinę</item>
+        <item quantity="few">Cykl odświeżania ustawiony jest na conajmniej %s godziny</item>
+        <item quantity="many">Cykl odświeżania ustawiony jest na conajmniej %s godzin</item>
     </plurals>
 
     <!-- UndoBar -->

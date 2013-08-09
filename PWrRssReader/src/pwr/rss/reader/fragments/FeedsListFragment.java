@@ -89,6 +89,7 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 			else if (DownloadService.ACTION_DEVICE_OFFLINE.equals(receivedIntent)) {
 				showAlertDialog();
 			}
+			activity.setSupportProgressBarIndeterminateVisibility(false);
 			restartLoader();
 		}
 	};
@@ -105,7 +106,7 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 		this.checkedItems = new SparseArray<View>();
 		this.isInActionMode = false;
 		
-		this.activity = (FeedsListActivity) activity;
+		this.activity = (FeedsListActivity) getSherlockActivity();
 		this.loaderManager = getLoaderManager();
 		this.feedCursorAdapter = new FeedCursorAdapter(activity, null);
 		this.applicationObject = (ApplicationObject) activity.getApplication();
@@ -230,7 +231,9 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 	 ***************************************/
 	private void markAllAsRead() {
 		ArrayList<Long> feedsMarkedAsReadIDs = applicationObject.markAllAsRead();
-		createUndoAction(feedsMarkedAsReadIDs, R.string.undobar_message_read_all, UndoableCollection.Action.READ);
+		if (!feedsMarkedAsReadIDs.isEmpty()) {
+			createUndoAction(feedsMarkedAsReadIDs, R.string.undobar_message_read_all, UndoableCollection.Action.READ);
+		}
 		restartLoader();
 	}
 	
@@ -266,6 +269,7 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 			showAlertDialog();
 			pullToRefreshListView.onRefreshComplete();
 		}
+		activity.setSupportProgressBarIndeterminateVisibility(false);
 	}
 	
 	private void showAlertDialog() {

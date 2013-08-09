@@ -2,6 +2,7 @@ package pwr.rss.reader.views;
 
 import org.apache.http.protocol.HTTP;
 
+import pwr.rss.reader.FeedsListActivity;
 import pwr.rss.reader.R;
 import pwr.rss.reader.animations.AnimationEndListener;
 import pwr.rss.reader.animations.CollapseAnimation;
@@ -18,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 public class AboutView extends LinearLayout implements OnClickListener {
-	private static final boolean isOverICS = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH;
 	private ImageView expandCollapse;
 	private ImageView imageViewMail;
 	private LinearLayout aboutHeader;
@@ -50,7 +50,7 @@ public class AboutView extends LinearLayout implements OnClickListener {
 		aboutHeader = (LinearLayout) findViewById(R.id.aboutHeader);
 		aboutHeader.setOnClickListener(this);
 		
-		if (!isOverICS) {
+		if (!FeedsListActivity.NEW_API()) {
 			aboutDescription.setVisibility(View.VISIBLE);
 		}
 	}
@@ -87,7 +87,7 @@ public class AboutView extends LinearLayout implements OnClickListener {
 	
 	@Override
 	public void onClick(View v) {
-		if (!expanding && isOverICS) {
+		if (!expanding && FeedsListActivity.NEW_API()) {
 			int imageResource = 0;
 			
 			if (!expanded) {

@@ -16,8 +16,8 @@ import pwr.rss.reader.OnMenuListActionListener
 import android.view.LayoutInflater
 import android.view.ViewGroup
 
-class ListMenuFragmentICS extends ListMenuFragment {
-	override protected lazy val view = LayoutInflater.from(activity).inflate(R.layout.menu_list_ics, null)
+class ListMenuFragmentHC extends ListMenuFragment {
+	override protected lazy val view = LayoutInflater.from(activity).inflate(R.layout.menu_list_hc, null)
 	override protected lazy val dialog = new AlertDialog.Builder(getActivity).create
 
 	override protected def configureDialog = {

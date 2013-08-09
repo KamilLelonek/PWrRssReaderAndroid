@@ -23,6 +23,7 @@ import android.text.TextUtils
 import scala.collection.JavaConversions._
 import java.util.ArrayList
 import java.lang.Long
+import pwr.rss.reader.FeedsListActivity._
 
 object FeedDao {
 	sealed trait READABLE extends Product with Serializable
@@ -168,13 +169,11 @@ class FeedDao(private val database: SQLiteDatabase) extends DAO(database) {
 		val selectionArgs = Array(channelID.toString, "0")
 		val whereClause = C_CHANNEL + " =? AND " + C_READ + " =?"
 
-		if (devicePreHoneyComb)
+		if (!NEW_API)
 			countPreHoneycomb(whereClause, selectionArgs)
 		else
 			countPostHoneycomb(whereClause, selectionArgs)
 	}
-
-	private def devicePreHoneyComb = Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB
 
 	private def countPreHoneycomb(whereClause: String, selectionArgs: Array[String]) = {
 		val countCursor =
