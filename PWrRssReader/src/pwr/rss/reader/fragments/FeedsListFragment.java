@@ -14,6 +14,7 @@ import pwr.rss.reader.database.dao.Feed;
 import pwr.rss.reader.utils.UndoableCollection;
 import pwr.rss.reader.utils.UndoableCollection.Action;
 import pwr.rss.reader.web.DownloadService;
+import pwr.rss.reader.web.WebEventReceiver;
 import squixy.sln.swipetodismiss.OnDismissCallback;
 import squixy.sln.swipetodismiss.SwipeDismissList;
 import squixy.sln.swipetodismiss.Undoable;
@@ -22,7 +23,6 @@ import undobar.controller.library.UndoBarListener;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
@@ -37,6 +37,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
@@ -59,9 +60,9 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 	
 	public static final String FLAG_POSITION = "FLAG_POSITION";
 	public static final String ACTION_REFRESH = "ACTION_REFRESH";
+	
 	private static final int LOADER_ID = 0x213;
 	private static int COLOR_BLUE;
-	
 	private final Intent downloadIntent = new Intent(DownloadService.ACTION_START_DOWNLOAD);
 	
 	private FeedsListActivity activity;
@@ -78,21 +79,7 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 	private boolean isInActionMode;
 	private FragmentManager fragmentManager;
 	private DialogFragmentInternetConnection dialogFragmentInternetConnection;
-	
-	private final BroadcastReceiver downloadFinishedReceiver = new BroadcastReceiver() {
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			String receivedIntent = intent.getAction();
-			if (DownloadService.ACTION_DOWNLOAD_COMPLETED.equals(receivedIntent)) {
-				applicationObject.showBottomToast(R.string.message_feeds_list_updated);
-			}
-			else if (DownloadService.ACTION_DEVICE_OFFLINE.equals(receivedIntent)) {
-				showAlertDialog();
-			}
-			activity.setSupportProgressBarIndeterminateVisibility(false);
-			restartLoader();
-		}
-	};
+	private BroadcastReceiver downloadFinishedReceiver;
 	
 	/***************************************
 	 ********** LIFECYCLE METHODS **********
@@ -111,6 +98,7 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 		this.feedCursorAdapter = new FeedCursorAdapter(activity, null);
 		this.applicationObject = (ApplicationObject) activity.getApplication();
 		this.localBroadcastManager = LocalBroadcastManager.getInstance(activity);
+		this.downloadFinishedReceiver = new WebEventReceiver(this);
 		
 		COLOR_BLUE = getResources().getColor(R.color.blue_selected);
 	}
@@ -167,7 +155,7 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 	@SuppressLint("InlinedApi")
 	private ListView getConfiguredListView() {
 		listView = pullToRefreshListView.getRefreshableView();
-		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+		listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 		listView.setOnItemLongClickListener(this);
 		return listView;
 	}
@@ -266,13 +254,13 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 			activity.sendBroadcast(downloadIntent);
 		}
 		else {
-			showAlertDialog();
+			showAlertDeviceOffline();
 			pullToRefreshListView.onRefreshComplete();
 		}
 		activity.setSupportProgressBarIndeterminateVisibility(false);
 	}
 	
-	private void showAlertDialog() {
+	public void showAlertDeviceOffline() {
 		if (!dialogFragmentInternetConnection.isAdded()) {
 			dialogFragmentInternetConnection.show(fragmentManager, "DialogFragmentInternetConnection");
 		}
@@ -281,7 +269,6 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 	@Override
 	public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 		markAllAsRead();
-		pullToRefreshListView.onRefreshComplete();
 	}
 	
 	/***************************************
@@ -563,7 +550,7 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 	}
 	
 	private void openFeedDetails(int position) {
-		startActivity(getFeedDetailsIntent(position));
+		startActivity(getFeedDetailsIntent(position - 1));
 		activity.overridePendingTransition(0, 0);
 	}
 	

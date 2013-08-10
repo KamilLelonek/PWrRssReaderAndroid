@@ -89,6 +89,7 @@ public class FeedDetailsFragment extends SherlockFragment implements SateliteCli
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
 		this.setHasOptionsMenu(true);
 		this.position = getArguments() != null ? getArguments().getInt(POSITION) : 1;
 	}
@@ -136,7 +137,7 @@ public class FeedDetailsFragment extends SherlockFragment implements SateliteCli
 	}
 	
 	private boolean canDownloadImage(String imageLink) {
-		return !TextUtils.isEmpty(imageLink) && applicationObject.isConnectedToInternet();
+		return !TextUtils.isEmpty(imageLink) && applicationObject.canDownloadImagesOnCurrentConnectionType();
 	}
 	
 	private void configureSateliteMenu(View view) {

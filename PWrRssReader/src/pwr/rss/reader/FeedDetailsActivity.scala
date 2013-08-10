@@ -26,8 +26,7 @@ import pwr.rss.reader.utils.BackgroundTasker.performDelayed
 import pwr.rss.reader.views.ViewHelper.findView
 import pwr.rss.reader.web.DownloadService
 
-class FeedDetailsActivity extends SherlockFragmentActivity
-		with UndoBarListener {
+class FeedDetailsActivity extends SherlockFragmentActivity with UndoBarListener {
 	private lazy val application = getApplication.asInstanceOf[ApplicationObject]
 	private lazy val cursor = application.getCurrentCursor
 	private lazy val fragmentManager = getSupportFragmentManager
@@ -38,12 +37,13 @@ class FeedDetailsActivity extends SherlockFragmentActivity
 	private lazy val flagAction = getIntent.getStringExtra(FeedDetailsFragment.FLAG_ACTION)
 	private lazy val feed = getIntent.getSerializableExtra(FeedDetailsFragment.FEED).asInstanceOf[Feed]
 	private lazy val localBroadcastManager = LocalBroadcastManager.getInstance(this)
+	private lazy val downloadFinishedIntent = new IntentFilter(DownloadService.ACTION_DOWNLOAD_COMPLETED)
 
 	private lazy val downloadFinishedReceiver = new BroadcastReceiver {
 		override def onReceive(context: Context, ent: Intent) =
-			if (DownloadService.ACTION_DOWNLOAD_COMPLETED.equals(ent.getAction))
-				restart
+			if (DownloadService.ACTION_DOWNLOAD_COMPLETED.equals(ent.getAction)) restart
 	}
+
 	private lazy val pageChangeListener = new SimpleOnPageChangeListener {
 		override def onPageSelected(position: Int) = {
 			getIntent.putExtra(FeedsListFragment.FLAG_POSITION, position)
@@ -59,8 +59,7 @@ class FeedDetailsActivity extends SherlockFragmentActivity
 		viewIndicator.setViewPager(viewPager)
 		viewIndicator.setOnPageChangeListener(pageChangeListener)
 		undoBarController.registerUndoBarListener(this)
-		this.localBroadcastManager.registerReceiver(downloadFinishedReceiver,
-			new IntentFilter(DownloadService.ACTION_DOWNLOAD_COMPLETED))
+		localBroadcastManager.registerReceiver(downloadFinishedReceiver, downloadFinishedIntent)
 	}
 
 	override def onPostResume = {
@@ -132,15 +131,5 @@ class FeedDetailsActivity extends SherlockFragmentActivity
 		cursor.moveToPosition(position)
 		val currentFeed = application.getFeed(cursor)
 		application.markFeedAsRead(currentFeed)
-	}
-
-	private def getFragment = {
-		val fragmentsArray = fragmentManager.getClass.getDeclaredField("mAdded")
-		fragmentsArray.setAccessible(true);
-		val fragments = fragmentsArray.get(fragmentManager).asInstanceOf[ArrayList[FeedDetailsFragment]]
-
-		if (fragments.size == 0) null
-		else if (fragments.size == 1) fragments.get(0)
-		else fragments.get(1)
 	}
 }

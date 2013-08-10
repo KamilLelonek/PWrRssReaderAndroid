@@ -17,12 +17,13 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 public class AboutView extends LinearLayout implements OnClickListener {
 	private ImageView expandCollapse;
 	private ImageView imageViewMail;
 	private LinearLayout aboutHeader;
-	private LinearLayout aboutDescription;
+	private ScrollView aboutDescription;
 	
 	private boolean expanded = false;
 	private boolean expanding = false;
@@ -46,7 +47,7 @@ public class AboutView extends LinearLayout implements OnClickListener {
 			}
 		});
 		expandCollapse = (ImageView) findViewById(R.id.expandCollapse);
-		aboutDescription = (LinearLayout) findViewById(R.id.aboutDescription);
+		aboutDescription = (ScrollView) findViewById(R.id.aboutDescription);
 		aboutHeader = (LinearLayout) findViewById(R.id.aboutHeader);
 		aboutHeader.setOnClickListener(this);
 		

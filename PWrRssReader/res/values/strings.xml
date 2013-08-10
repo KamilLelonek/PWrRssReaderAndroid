@@ -61,6 +61,8 @@
     <string name="preference_auto_mark_as_read_summary">Once feed is opened in detailded view mark it automatically as read</string>
     <string name="preference_keep_read_feeds">Keep unread feeds</string>
     <string name="preference_keep_read_feeds_summary">Even when feed is read it will be maintained after application close</string>
+    <string name="preference_images_only_on_wifi">Images only on wifi</string>
+    <string name="preference_images_only_on_wifi_summary">Download images only when Wifi is connected</string>
     <string name="preference_refreshing">Refreshing</string>
     <string name="preference_extras">Extras</string>
 
@@ -91,5 +93,6 @@
     <string name="contentDescription_feedImage">Feed image</string>
     <string name="contentDescription_toast_refresh">Toast refresh</string>
     <string name="contentDescription_scroll">Scroll to top</string>
+    <string name="contentDescription_url">Link to feed</string>
 
 </resources>

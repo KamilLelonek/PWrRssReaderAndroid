@@ -25,7 +25,7 @@ class RowCard(cursor: Cursor, context: Context) extends MyCard(cursor, context) 
 
 	override def getCardContent(context: Context) = {
 		super.getCardContent
-		val view = LayoutInflater.from(context).inflate(R.layout.list_item, null)
+		val view = LayoutInflater.from(context).inflate(R.layout.card_row, null)
 		configureView(view)
 		view
 	}

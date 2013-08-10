@@ -39,6 +39,7 @@ class FeedsListActivity extends SlidingFragmentActivity with OnMenuListActionLis
 		setBehindContentView(R.layout.menu_frame)
 		configureSlidingMenu
 		configureActionBar
+		application.setFirstRun
 	}
 
 	override def onResume = {
@@ -57,7 +58,7 @@ class FeedsListActivity extends SlidingFragmentActivity with OnMenuListActionLis
 
 	private def configureActionBar = {
 		val actionBar = getSupportActionBar
-		setSupportProgressBarIndeterminateVisibility(true)
+		if (application.isFirstRun) setSupportProgressBarIndeterminateVisibility(true)
 		actionBar setHomeButtonEnabled (true)
 		actionBar setIcon (R.drawable.ic_menu)
 		setSlidingActionBarEnabled(true)

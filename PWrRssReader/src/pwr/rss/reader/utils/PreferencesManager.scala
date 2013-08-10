@@ -1,10 +1,15 @@
 package pwr.rss.reader.utils
 
 import android.preference.PreferenceManager
+import PreferencesManager._
 import android.content.Context
 import pwr.rss.reader.PreferencesActivity._
 import pwr.rss.reader.R
 import java.util.Date
+
+object PreferencesManager {
+	private lazy val KEY_IS_FIRST_RUN = "is_first_run"
+}
 
 class PreferencesManager(context: Context) {
 	private lazy val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -17,6 +22,7 @@ class PreferencesManager(context: Context) {
 	def isNotificationSoundEnabled = getBooleanOrTrue(KEY_NOTIFICATIONS_SOUND)
 	def keepFeedsAsRead = getBooleanOrTrue(KEY_KEEP_READ_FEEDS)
 	def autoMarkAsRead = getBooleanOrFalse(KEY_AUTO_MARK_AS_READ)
+	def imagesOnlyOnWifi = getBooleanOrTrue(KEY_IMAGES_ONLY_WIFI)
 
 	def getSelectedRadioButtonId = sharedPreferences.getInt(KEY_CHECKED_RADIO_BUTTON, R.id.radioButtonAll)
 	def setSelectedRadioButtonId(radioButtonId: Int) =
@@ -29,6 +35,9 @@ class PreferencesManager(context: Context) {
 	def getLastUpdateDate = getLong(KEY_LAST_UPDATED)
 	def setLastUpdateDate =
 		putValueToPreferences(KEY_LAST_UPDATED, System.currentTimeMillis)
+
+	def isFirstRun = getBooleanOrTrue(KEY_IS_FIRST_RUN)
+	def setFirstRun = putValueToPreferences(KEY_IS_FIRST_RUN, false)
 
 	private def putValueToPreferences[T](key: String, value: T) = {
 		val sharedPrefEditor = sharedPreferences.edit

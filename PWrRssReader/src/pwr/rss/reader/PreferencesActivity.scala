@@ -24,6 +24,7 @@ object PreferencesActivity {
 	final lazy val KEY_SHOW_SELECTED_ONLY = "preference_show_selected_only"
 	final lazy val KEY_KEEP_READ_FEEDS = "preference_keep_read_feeds"
 	final lazy val KEY_LAST_UPDATED = "preference_last_updated"
+	final lazy val KEY_IMAGES_ONLY_WIFI = "preference_images_only_on_wifi"
 
 	private final lazy val DEFAULT_REFRESH_PERIOD = "24"
 }

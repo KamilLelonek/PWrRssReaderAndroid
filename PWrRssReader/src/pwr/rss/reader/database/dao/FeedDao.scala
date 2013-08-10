@@ -154,7 +154,7 @@ class FeedDao(private val database: SQLiteDatabase) extends DAO(database) {
 				C_ADDED_DATE),
 			whereClause,
 			selectionArgs,
-			null, null, C_ADDED_DATE)
+			null, null, C_ADDED_DATE + " DESC")
 
 	private def getJoinQuery = {
 		val joinQuery = new SQLiteQueryBuilder

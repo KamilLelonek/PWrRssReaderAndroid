@@ -23,6 +23,8 @@ class ApplicationObject extends Application {
 	  */
 	private lazy val preferencesManager = new PreferencesManager(this)
 
+	def isFirstRun = preferencesManager.isFirstRun
+	def setFirstRun = preferencesManager.setFirstRun
 	def isAutoRefreshEnabled = preferencesManager.isAutoRefreshEnabled
 	def getRefreshPeriod = preferencesManager.getRefreshPeriod.toInt
 	def areNotificationsEnabled = preferencesManager.areNotificationsEnabled
@@ -37,6 +39,7 @@ class ApplicationObject extends Application {
 	def keepFeedsAsRead = preferencesManager.keepFeedsAsRead
 	def getLastUpdateDate = preferencesManager.getLastUpdateDate
 	def setLastUpdateDate = preferencesManager.setLastUpdateDate
+	def imagesOnlyOnWifi = preferencesManager.imagesOnlyOnWifi
 
 	/**
 	  * ************************************************
@@ -88,7 +91,7 @@ class ApplicationObject extends Application {
 	  *
 	  * @return true if application is NOT visible on screen
 	  */
-	private def isAppRunningInBackground = {
+	def isAppRunningInBackground = {
 		val topTask = activityManager.getRunningTasks(1)
 		val topActivity = topTask.get(0).topActivity
 		val currentActivityPackageName = topActivity.getPackageName
@@ -122,4 +125,7 @@ class ApplicationObject extends Application {
 
 	def isConnectedToInternet =
 		isWiFiEnabled || isMobileDataEnabled
+
+	def canDownloadImagesOnCurrentConnectionType =
+		isConnectedToInternet && (!imagesOnlyOnWifi || (imagesOnlyOnWifi && isWiFiEnabled))
 }

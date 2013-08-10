@@ -8,6 +8,7 @@ import pwr.rss.reader.json.PWrJSONParser;
 import android.app.IntentService;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.content.WakefulBroadcastReceiver;
 
 public class DownloadService extends IntentService {
 	public static final String ACTION_DOWNLOAD_COMPLETED = "pwr.rss.reader.action.download_completed";
@@ -37,7 +38,7 @@ public class DownloadService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		downloadDataIfOnline();
-		WakeReceiver.completeWakefulIntent(intent);
+		WakefulBroadcastReceiver.completeWakefulIntent(intent);
 	}
 	
 	private void downloadDataIfOnline() {

@@ -62,6 +62,8 @@
     <string name="preference_auto_mark_as_read_summary">Po otworzeniu wiadomości, zostanie automatycznie oznaczona jako przeczytana</string>
     <string name="preference_keep_read_feeds">Przechowuj przeczytane wiadomości</string>
     <string name="preference_keep_read_feeds_summary">Nawet jeśli wiadomość jest przeczytana, nadal będzie widoczna na liście po restarcie aplikacji</string>
+    <string name="preference_images_only_on_wifi">Obrazki tylko przez Wifi</string>
+    <string name="preference_images_only_on_wifi_summary">Pobieraj obrazki tylko jeżeli urządzenie ma aktywne połączenie przez Wifi</string>
     <string name="preference_refreshing">Odświeżanie</string>
     <string name="preference_extras">Pozostałe</string>
 
@@ -93,5 +95,6 @@
     <string name="contentDescription_feedImage">Obrazek wiadomości</string>
     <string name="contentDescription_toast_refresh">Ikona toast</string>
     <string name="contentDescription_scroll">Przewiń do góry</string>
+    <string name="contentDescription_url">Odnośnik do wiadomości</string>
 
 </resources>

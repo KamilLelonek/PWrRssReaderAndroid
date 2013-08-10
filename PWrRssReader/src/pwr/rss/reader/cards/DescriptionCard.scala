@@ -14,6 +14,8 @@ import android.net.Uri
 import pwr.rss.reader.utils.CursorFetcher
 import android.text.Html
 import android.text.method.LinkMovementMethod
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 
 class DescriptionCard(cursor: Cursor, context: Context) extends MyCard(cursor, context) {
 
@@ -25,8 +27,9 @@ class DescriptionCard(cursor: Cursor, context: Context) extends MyCard(cursor, c
 	}
 
 	protected def configureView(view: View) = {
+		val spannableHTML = Html.fromHtml(cursorFetcher.getDescription)
 		val description = findView[TextView](view, R.id.card_description)
-		description.setText(Html.fromHtml(cursorFetcher.getDescription))
+		description.setText(spannableHTML)
 		description.setTextColor(cursorFetcher.getTextColor)
 		description.setMovementMethod(LinkMovementMethod.getInstance)
 	}
