@@ -20,6 +20,11 @@
     <string name="menu_unread">Nieprzeczytane</string>
     <string name="menu_refresh_list_view">Odśwież listę</string>
 
+    <!-- Action mode -->
+    <plurals name="action_mode_selected">
+        <item quantity="other">%d zaznaczono</item>
+    </plurals>
+
     <!-- Menu List -->
     <string name="menu_mark_all_as_read">Oznacz wszystkie jako przeczytane</string>
     <string name="menu_refresh">Odśwież</string>

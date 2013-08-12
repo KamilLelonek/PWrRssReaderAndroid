@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -80,6 +81,7 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 	private FragmentManager fragmentManager;
 	private DialogFragmentInternetConnection dialogFragmentInternetConnection;
 	private BroadcastReceiver downloadFinishedReceiver;
+	private Resources resources;
 	
 	/***************************************
 	 ********** LIFECYCLE METHODS **********
@@ -92,7 +94,7 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 		
 		this.checkedItems = new SparseArray<View>();
 		this.isInActionMode = false;
-		
+		this.resources = getResources();
 		this.activity = (FeedsListActivity) getSherlockActivity();
 		this.loaderManager = getLoaderManager();
 		this.feedCursorAdapter = new FeedCursorAdapter(activity, null);
@@ -392,8 +394,8 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 		switchActionMode();
 		
 		if (isInActionMode) {
-			checkItem(position, v);
 			startActionMode();
+			checkItem(position, v);
 		}
 		else {
 			uncolorAndClearAllItems();
@@ -401,12 +403,6 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 		}
 		
 		return true;
-	}
-	
-	private void finishActionMode() {
-		actionMode.finish();
-		actionMode = null;
-		activity.getSupportActionBar().setDisplayShowCustomEnabled(true);
 	}
 	
 	private void switchActionMode() {
@@ -432,6 +428,12 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 		actionMode = activity.startActionMode(new ActionModeCallback());
 	}
 	
+	private void finishActionMode() {
+		actionMode.finish();
+		actionMode = null;
+		activity.getSupportActionBar().setDisplayShowCustomEnabled(true);
+	}
+	
 	private void setItemChecked(int position, View v, boolean isChecked) {
 		if (isChecked) {
 			checkedItems.put(position, v);
@@ -439,6 +441,10 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 		else {
 			checkedItems.delete(position);
 		}
+		
+		int count = checkedItems.size();
+		String countSelected = resources.getQuantityString(R.plurals.action_mode_selected, count, count);
+		actionMode.setTitle(countSelected);
 	}
 	
 	private void colorItem(View v, boolean isChecked) {

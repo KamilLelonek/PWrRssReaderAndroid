@@ -20,6 +20,12 @@
     <string name="menu_unread">Unread</string>
     <string name="menu_refresh_list_view">Refresh list</string>
 
+    <!-- Action mode -->
+    <plurals name="action_mode_selected">
+        <item quantity="one">One selected</item>
+        <item quantity="other">%d selected</item>
+    </plurals>
+
     <!-- Menu List -->
     <string name="menu_mark_all_as_read">Mark all as read</string>
     <string name="menu_refresh">Refresh</string>
@@ -49,6 +55,7 @@
     <string name="preference_auto_refresh_summary">Allow app to automaticaly download new feeds once in a specified period of time</string>
     <string name="preference_period">Refresh period</string>
     <string name="preference_notifications">Notifications</string>
+    <string name="preference_notifications_summary">How do you want to be notified?</string>
     <string name="preference_notifications_summary_checked">You will be notified by:&#160;</string>
     <string name="preference_notifications_summary_unchecked">You won\'t be notified about new feeds</string>
     <string name="preference_notifications_led">Led</string>

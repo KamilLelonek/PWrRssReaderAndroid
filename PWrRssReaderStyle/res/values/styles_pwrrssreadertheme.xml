@@ -20,7 +20,7 @@
 
 <resources>
 
-    <style name="Theme.Pwrrssreadertheme" parent="Theme.Pwrrssreadertheme.Common">
+    <style name="Theme.Pwrrssreadertheme" parent="PWrRssReaderEverywhereTheme">
         <item name="actionBarItemBackground">@drawable/selectable_background_pwrrssreadertheme</item>
         <item name="popupMenuStyle">@style/PopupMenu.Pwrrssreadertheme</item>
         <item name="dropDownListViewStyle">@style/DropDownListView.Pwrrssreadertheme</item>

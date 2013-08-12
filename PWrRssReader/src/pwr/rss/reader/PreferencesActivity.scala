@@ -38,12 +38,11 @@ class PreferencesActivity extends GeneralPreferenceActivity with OnSharedPrefere
 
 	override def onCreate(savedInstanceState: Bundle) = {
 		super.onCreate(savedInstanceState)
+
 		if (FeedsListActivity.NEW_API)
 			addPreferencesFromResource(R.xml.preferences_hc)
-		else {
+		else
 			addPreferencesFromResource(R.xml.preferences_gb)
-			preferenceNotifications.setSummary(R.string.preference_notifications_summary)
-		}
 	}
 
 	override def onResume = {
@@ -52,7 +51,9 @@ class PreferencesActivity extends GeneralPreferenceActivity with OnSharedPrefere
 			.registerOnSharedPreferenceChangeListener(this)
 
 		configureRefreshPeriod
+
 		if (FeedsListActivity.NEW_API) configureNotificationsType
+		else preferenceNotifications.setSummary(R.string.preference_notifications_summary)
 	}
 
 	override def onPause = {
