@@ -11,6 +11,7 @@ import pwr.rss.reader.R;
 import pwr.rss.reader.database.adapters.FeedCursorAdapter;
 import pwr.rss.reader.database.adapters.SQLiteCursorLoader;
 import pwr.rss.reader.database.dao.Feed;
+import pwr.rss.reader.utils.AlertDialogBuilder;
 import pwr.rss.reader.utils.UndoableCollection;
 import pwr.rss.reader.utils.UndoableCollection.Action;
 import pwr.rss.reader.web.DownloadService;
@@ -263,8 +264,13 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 	}
 	
 	public void showAlertDeviceOffline() {
-		if (!dialogFragmentInternetConnection.isAdded()) {
-			dialogFragmentInternetConnection.show(fragmentManager, "DialogFragmentInternetConnection");
+		if (FeedsListActivity.NEW_API()) {
+			if (!dialogFragmentInternetConnection.isAdded()) {
+				dialogFragmentInternetConnection.show(fragmentManager, "DialogFragmentInternetConnection");
+			}
+		}
+		else {
+			AlertDialogBuilder.getAlertDialog(activity).show();
 		}
 	}
 	
