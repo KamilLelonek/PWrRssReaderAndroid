@@ -59,7 +59,12 @@ public class ServiceManager extends IntentService implements OnSharedPreferenceC
 	 */
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		startDownloadUpdateRequest();
+		if (isConnectedToInternet()) {
+			startDownloadUpdateRequest();
+		}
+		else {
+			cancelDownloadUpdateRequest();
+		}
 	}
 	
 	private void startDownloadUpdateRequest() {
@@ -71,6 +76,10 @@ public class ServiceManager extends IntentService implements OnSharedPreferenceC
 	
 	private boolean isAutoRefreshEnabled() {
 		return applicationObject.isAutoRefreshEnabled();
+	}
+	
+	private boolean isConnectedToInternet() {
+		return applicationObject.isConnectedToInternet();
 	}
 	
 	private int getAutoRefreshTimeCycle() {

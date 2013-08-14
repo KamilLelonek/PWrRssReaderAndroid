@@ -22,7 +22,9 @@
 
     <!-- Action mode -->
     <plurals name="action_mode_selected">
-        <item quantity="other">%d zaznaczono</item>
+        <item quantity="one">jedna zaznaczona</item>
+        <item quantity="few">%d zaznaczone</item>
+        <item quantity="many">%d zaznaczonych</item>
     </plurals>
 
     <!-- Menu List -->
@@ -50,7 +52,7 @@
     <string name="notification_text">Nowe nieprzeczytane wiadomości</string>
 
     <!-- Preferences -->
-    <string name="preference_auto_refresh">Automatyczne odwieżanie</string>
+    <string name="preference_auto_refresh">Cykliczne odwieżanie</string>
     <string name="preference_auto_refresh_summary">Pozwól aplikacji co jakiś czas aktualizować listę wiadomości</string>
     <string name="preference_period">Cykl odświeżania</string>
     <string name="preference_notifications">Powiadomienia</string>

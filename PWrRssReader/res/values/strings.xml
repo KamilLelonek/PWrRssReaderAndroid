@@ -51,7 +51,7 @@
     <string name="notification_text">New unread feeds</string>
 
     <!-- Preferences -->
-    <string name="preference_auto_refresh">Auto refresh</string>
+    <string name="preference_auto_refresh">Periodic refresh</string>
     <string name="preference_auto_refresh_summary">Allow app to automaticaly download new feeds once in a specified period of time</string>
     <string name="preference_period">Refresh period</string>
     <string name="preference_notifications">Notifications</string>
