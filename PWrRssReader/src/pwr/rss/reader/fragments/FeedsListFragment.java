@@ -30,6 +30,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -83,6 +84,8 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 	private DialogFragmentInternetConnection dialogFragmentInternetConnection;
 	private BroadcastReceiver downloadFinishedReceiver;
 	private Resources resources;
+	private Handler handler;
+	private Runnable hireRefreshListHeaderRunnable;
 	
 	/***************************************
 	 ********** LIFECYCLE METHODS **********
@@ -102,6 +105,13 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 		this.applicationObject = (ApplicationObject) activity.getApplication();
 		this.localBroadcastManager = LocalBroadcastManager.getInstance(activity);
 		this.downloadFinishedReceiver = new WebEventReceiver(this);
+		this.handler = new Handler();
+		this.hireRefreshListHeaderRunnable = new Runnable() {
+			@Override
+			public void run() {
+				pullToRefreshListView.onRefreshComplete();
+			}
+		};
 		
 		COLOR_BLUE = getResources().getColor(R.color.blue_selected);
 	}
@@ -258,9 +268,13 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 		}
 		else {
 			showAlertDeviceOffline();
-			pullToRefreshListView.onRefreshComplete();
+			hireRefreshListHeader();
 		}
 		activity.setSupportProgressBarIndeterminateVisibility(false);
+	}
+	
+	private void hireRefreshListHeader() {
+		handler.postDelayed(hireRefreshListHeaderRunnable, 100);
 	}
 	
 	public void showAlertDeviceOffline() {
@@ -375,7 +389,7 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 	
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-		pullToRefreshListView.onRefreshComplete();
+		hireRefreshListHeader();
 		feedCursorAdapter.swapCursor(cursor);
 	}
 	
