@@ -1,5 +1,6 @@
 package pwr.rss.reader;
 
+import pwr.rss.reader.utils.ProgressWheel;
 import pwr.rss.reader.web.ServiceManager;
 import android.app.Activity;
 import android.content.Intent;
@@ -27,8 +28,20 @@ public class SplashScreenActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash_screen);
 		
+		initProgressBar();
+		
 		openDelayedMainActiviy();
 		startServiceManager();
+	}
+	
+	/**
+	 * Starts spinning progress bar in available in layout
+	 */
+	private void initProgressBar() {
+		ProgressWheel progressWheel = (ProgressWheel) findViewById(R.id.progressBar);
+		if (progressWheel != null) {
+			progressWheel.spin();
+		}
 	}
 	
 	/**
@@ -72,6 +85,7 @@ public class SplashScreenActivity extends Activity {
 	
 	private void finishAndStartMainActivity() {
 		startActivity(getFinishingIntent());
+		finish();
 	}
 	
 	private Intent getFinishingIntent() {

@@ -21,7 +21,6 @@ object PreferencesActivity {
 	final lazy val KEY_NOTIFICATIONS_VIBRATIONS = "preference_notifications_vibrations"
 	final lazy val KEY_AUTO_MARK_AS_READ = "preference_auto_mark_as_read"
 	final lazy val KEY_CHECKED_RADIO_BUTTON = "preference_checked_radio"
-	final lazy val KEY_SHOW_SELECTED_ONLY = "preference_show_selected_only"
 	final lazy val KEY_KEEP_READ_FEEDS = "preference_keep_read_feeds"
 	final lazy val KEY_LAST_UPDATED = "preference_last_updated"
 	final lazy val KEY_IMAGES_ONLY_WIFI = "preference_images_only_on_wifi"

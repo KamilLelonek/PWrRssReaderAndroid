@@ -73,18 +73,18 @@ class FeedDao(private val database: SQLiteDatabase) extends DAO(database) {
 	  */
 	implicit def bool2string(b: Boolean) = if (b) "1" else "0"
 
-	def getFeedsCursor(kind: READABLE, selectedOnly: Boolean, filterQuery: String) = {
+	def getFeedsCursor(kind: READABLE, filterQuery: String) = {
 		val whereClause = new StringBuilder
 		val selectionArgs = ArrayBuffer[String]()
 
 		addKindClause(kind, whereClause, selectionArgs)
-		addSelectedClause(selectedOnly, whereClause, selectionArgs)
+		addSelectedClause(whereClause, selectionArgs)
 		addFilterClause(filterQuery, whereClause, selectionArgs)
 
 		getCursorWithSpecifiedWhereClause(whereClause.toString, selectionArgs.toArray)
 	}
 
-	def getChannelFeedsCursor(channelID: Long) = {
+	private def getChannelUnreadFeedsCursor(channelID: Long) = {
 		val whereClause = new StringBuilder
 		val selectionArgs = ArrayBuffer[String]()
 
@@ -108,12 +108,10 @@ class FeedDao(private val database: SQLiteDatabase) extends DAO(database) {
 		}
 	}
 
-	private def addSelectedClause(selectedOnly: Boolean, whereClause: StringBuilder, selectionArgs: ArrayBuffer[String]) = {
-		if (selectedOnly) {
-			addConnectiveToWhereClauses(whereClause, selectionArgs)
-			addToWhereClause(whereClause, C_SELECTED + " =?")
-			addToSelectionArgs(selectionArgs, true)
-		}
+	private def addSelectedClause(whereClause: StringBuilder, selectionArgs: ArrayBuffer[String]) = {
+		addConnectiveToWhereClauses(whereClause, selectionArgs)
+		addToWhereClause(whereClause, C_SELECTED + " =?")
+		addToSelectionArgs(selectionArgs, true)
 	}
 
 	private def addFilterClause(filterQuery: String, whereClause: StringBuilder, selectionArgs: ArrayBuffer[String]) =
@@ -135,7 +133,7 @@ class FeedDao(private val database: SQLiteDatabase) extends DAO(database) {
 	private def addToWhereClause(whereClause: StringBuilder, clause: String) = whereClause ++= clause
 	private def addToSelectionArgs(selectionArgs: ArrayBuffer[String], arg: String) = selectionArgs += arg
 
-	def getCursorWithSpecifiedWhereClause(whereClause: String, selectionArgs: Array[String]) =
+	private def getCursorWithSpecifiedWhereClause(whereClause: String, selectionArgs: Array[String]) =
 		getJoinQuery.query(
 			database,
 			Array(
@@ -231,7 +229,7 @@ class FeedDao(private val database: SQLiteDatabase) extends DAO(database) {
 		update(feed)
 	}
 
-	def markChannelAsRead(channelID: Long) = markAllAsRead(getChannelFeedsCursor(channelID))
+	def markChannelAsRead(channelID: Long) = markAllAsRead(getChannelUnreadFeedsCursor(channelID))
 
 	private def update(feed: Feed) = {
 		val values = new ContentValues
@@ -279,7 +277,7 @@ class FeedDao(private val database: SQLiteDatabase) extends DAO(database) {
 	  * ************************
 	  */
 	def removeReadFeeds = {
-		val cursor = getFeedsCursor(READ, false, "")
+		val cursor = getFeedsCursor(READ, "")
 		if (cursor.moveToFirst) {
 			do {
 				val idIndex = cursor.getColumnIndex(SQLQueries.ID)

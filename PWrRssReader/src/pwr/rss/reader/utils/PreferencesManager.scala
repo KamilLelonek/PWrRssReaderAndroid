@@ -28,10 +28,6 @@ class PreferencesManager(context: Context) {
 	def setSelectedRadioButtonId(radioButtonId: Int) =
 		putValueToPreferences(KEY_CHECKED_RADIO_BUTTON, radioButtonId)
 
-	def isSelectedOnlyChecked = getBooleanOrFalse(KEY_SHOW_SELECTED_ONLY)
-	def setSelectedOnlyChecked(isChecked: Boolean) =
-		putValueToPreferences(KEY_SHOW_SELECTED_ONLY, isChecked)
-
 	def getLastUpdateDate = getLong(KEY_LAST_UPDATED)
 	def setLastUpdateDate =
 		putValueToPreferences(KEY_LAST_UPDATED, System.currentTimeMillis)

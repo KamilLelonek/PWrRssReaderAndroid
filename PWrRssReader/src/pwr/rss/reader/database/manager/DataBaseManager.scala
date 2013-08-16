@@ -52,24 +52,16 @@ class DataBaseManager(context: Context) {
 
 	def getCurrentCursor(filterQuery: String) = {
 		val selectedRadioButtonId = applicationObject.getSelectedRadioButtonId
-		val isSelectedOnlyChecked = applicationObject.isSelectedOnlyChecked
 
 		selectedRadioButtonId match {
 			case R.id.radioButtonAll =>
-				getAllFeedsCursor(isSelectedOnlyChecked, filterQuery)
+				feedDao.getFeedsCursor(ALL, filterQuery)
 
 			case R.id.radioButtonRead =>
-				getReadFeedsCursor(isSelectedOnlyChecked, filterQuery)
+				feedDao.getFeedsCursor(READ, filterQuery)
 
 			case R.id.radioButtonUnread =>
-				getUnreadFeedsCursor(isSelectedOnlyChecked, filterQuery)
+				feedDao.getFeedsCursor(UNREAD, filterQuery)
 		}
 	}
-
-	private def getAllFeedsCursor(selected: Boolean, filterQuery: String) =
-		feedDao.getFeedsCursor(ALL, selected, filterQuery)
-	private def getReadFeedsCursor(selected: Boolean, filterQuery: String) =
-		feedDao.getFeedsCursor(READ, selected, filterQuery)
-	private def getUnreadFeedsCursor(selected: Boolean, filterQuery: String) =
-		feedDao.getFeedsCursor(UNREAD, selected, filterQuery)
 }

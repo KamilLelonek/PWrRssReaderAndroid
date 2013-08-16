@@ -14,7 +14,6 @@
     <!-- Menu Sliding -->
     <string name="menu_channels">KANAŁY</string>
     <string name="menu_display">WIDOK</string>
-    <string name="menu_onlySelected">Tylko zaznaczone</string>
     <string name="menu_all">Wszystkie</string>
     <string name="menu_read">Przeczytane</string>
     <string name="menu_unread">Nieprzeczytane</string>

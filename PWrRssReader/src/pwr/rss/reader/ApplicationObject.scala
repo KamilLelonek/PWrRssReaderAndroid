@@ -34,8 +34,6 @@ class ApplicationObject extends Application {
 	def autoMarkAsRead = preferencesManager.autoMarkAsRead
 	def getSelectedRadioButtonId = preferencesManager.getSelectedRadioButtonId
 	def setSelectedRadioButtonId(id: Int) = preferencesManager.setSelectedRadioButtonId(id)
-	def isSelectedOnlyChecked = preferencesManager.isSelectedOnlyChecked
-	def setSelectedOnlyChecked(value: Boolean) = preferencesManager.setSelectedOnlyChecked(value)
 	def keepFeedsAsRead = preferencesManager.keepFeedsAsRead
 	def getLastUpdateDate = preferencesManager.getLastUpdateDate
 	def setLastUpdateDate = preferencesManager.setLastUpdateDate

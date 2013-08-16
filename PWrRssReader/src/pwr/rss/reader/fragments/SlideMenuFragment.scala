@@ -21,7 +21,6 @@ import pwr.rss.reader.views.ViewHelper.findView
 
 class SlideMenuFragment extends SherlockFragment
 		with android.widget.RadioGroup.OnCheckedChangeListener
-		with android.widget.CompoundButton.OnCheckedChangeListener
 		with OnClickListener {
 
 	private lazy val activity = getActivity.asInstanceOf[FeedsListActivity]
@@ -40,7 +39,6 @@ class SlideMenuFragment extends SherlockFragment
 	override def onViewCreated(view: View, savedInstanceState: Bundle) = {
 		super.onViewCreated(view, savedInstanceState)
 		configureChannels(view)
-		configureCheckBox(view)
 		configureRadioGroup(view)
 		configureButton(view)
 	}
@@ -61,18 +59,6 @@ class SlideMenuFragment extends SherlockFragment
 			channel.updateUnreadCount
 		}
 	}
-
-	/**
-	  * CheckBox selected only
-	  */
-	private def configureCheckBox(view: View) = {
-		val checkBoxSelectedOnly = findView[CheckBox](view, R.id.checkBoxSelectedOnly)
-		checkBoxSelectedOnly.setOnCheckedChangeListener(this)
-		checkBoxSelectedOnly.setChecked(applicationObject.isSelectedOnlyChecked)
-	}
-
-	override def onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) =
-		applicationObject.setSelectedOnlyChecked(isChecked)
 
 	/**
 	  * RadioGroup read type
