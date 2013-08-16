@@ -7,14 +7,6 @@
 
     <include layout="@layout/divider_horizontal" />
 
-    <TextView
-        style="@style/textStyleBlueHeader"
-        android:layout_width="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/menu_title_buttons" />
-
-    <include layout="@layout/divider_horizontal" />
-
     <Button
         android:id="@+id/buttonMenuMarkAllAsRead"
         style="@style/ButtonMenuList"

@@ -16,7 +16,7 @@ import pwr.rss.reader.views.ViewHelper.findView
 
 class ImageCard(cursor: Cursor, context: Context) extends MyCard(cursor, context) {
 	private lazy val imageLink = cursorFetcher.getImageLink
-	private lazy val imageDialog = new Dialog(context)
+	private lazy val imageDialog = new Dialog(context, R.style.Dialog_No_Border)
 	private lazy val imageView = new ImageView(context)
 	private lazy val url = new URL(imageLink)
 	private lazy val bmp = BitmapFactory.decodeStream(url.openConnection.getInputStream)
@@ -32,6 +32,7 @@ class ImageCard(cursor: Cursor, context: Context) extends MyCard(cursor, context
 		val imageView = findView[ImageView](view, R.id.card_image)
 		BitmapUtils.downloadAndSetBitmapFromLink(imageLink, imageView)
 		imageDialog.getWindow.requestFeature(Window.FEATURE_NO_TITLE)
+		imageDialog.setCanceledOnTouchOutside(true)
 	}
 
 	override def onClick(v: View) = {
