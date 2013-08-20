@@ -81,7 +81,6 @@ class SlideMenuFragment extends SherlockFragment
 	/**
 	  * Button refresh list
 	  */
-
 	private def configureButton(view: View) = {
 		val button = findView[Button](view, R.id.buttonRefreshListView)
 		button.setOnClickListener(this)

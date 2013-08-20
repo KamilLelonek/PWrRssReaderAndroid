@@ -2,6 +2,8 @@ package pwr.rss.reader
 
 import java.lang.Long
 import java.util.ArrayList
+import java.util.List;
+
 import android.app.ActivityManager
 import android.app.Application
 import android.content.Context
@@ -59,8 +61,8 @@ class ApplicationObject extends Application {
 	def getCurrentCursor: Cursor = databaseManager.getCurrentCursor(filterQuery)
 	def setFilterQuery(query: String) = filterQuery = query
 
-	def getAllChannelsList = databaseManager getAllChannelsList
-	def getAllChannelsJavaList = databaseManager getAllChannelsJavaList
+	def getAllChannelsList = databaseManager.getAllChannelsList
+	def getSelectedChannelsIds: java.util.List[Int] = databaseManager.getSelectedChannelsIds
 	def selectChannel(channel: Channel) = databaseManager.selectChannel(channel)
 	def addFeed(feed: Feed) = databaseManager.addFeed(feed)
 	def addFeeds(feeds: ArrayList[Feed]) = databaseManager.addFeeds(feeds)

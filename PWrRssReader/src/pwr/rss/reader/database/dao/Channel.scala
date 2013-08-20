@@ -8,7 +8,7 @@ class Channel(
 		val name: String,
 		val logo: Long,
 		val site: String,
-		private var selected: Long = 1L) {
+		private var selected: Long = 0L) {
 
 	def select(asSelect: Boolean) = selected = if (asSelect) 1L else 0L
 	def isSelected = selected == 1L

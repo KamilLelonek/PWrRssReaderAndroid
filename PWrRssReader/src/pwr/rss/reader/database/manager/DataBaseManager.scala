@@ -34,6 +34,7 @@ class DataBaseManager(context: Context) {
 	def getAllChannelsList = channelDao getAllChannelsList
 	def getAllChannelsJavaList = channelDao getAllChannelsJavaList
 	def selectChannel(channel: Channel) = channelDao.selectChannel(channel)
+	def getSelectedChannelsIds = channelDao.getSelectedChannelsIds
 
 	/**
 	  * Feed DAO methods

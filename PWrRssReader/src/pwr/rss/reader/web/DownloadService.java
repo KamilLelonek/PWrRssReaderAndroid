@@ -1,6 +1,7 @@
 package pwr.rss.reader.web;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import pwr.rss.reader.ApplicationObject;
 import pwr.rss.reader.database.dao.Feed;
@@ -66,7 +67,8 @@ public class DownloadService extends IntentService {
 	
 	private void downloadData() {
 		long lastUpdateTime = applicationObject.getLastUpdateDate();
-		String inputString = HttpConnection.getInputString(lastUpdateTime);
+		List<Object> selectedChannelsIds = applicationObject.getSelectedChannelsIds();
+		String inputString = HttpConnection.getInputString(lastUpdateTime, selectedChannelsIds);
 		ArrayList<Feed> feeds = PWrJSONParser.getFeeds(inputString);
 		updateFeedsData(feeds);
 		notifyDownloadCompleted();

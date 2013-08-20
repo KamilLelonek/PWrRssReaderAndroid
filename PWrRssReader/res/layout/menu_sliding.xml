@@ -1,70 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginRight="30dp"
+    android:orientation="vertical"
     tools:ignore="HardcodedText" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="30dp"
-        android:orientation="vertical" >
+    <TextView
+        style="@style/MenuHeaderChannel"
+        android:drawableLeft="@drawable/ic_channels"
+        android:text="@string/menu_channels" />
 
-        <TextView
-            style="@style/MenuHeaderChannel"
-            android:drawableLeft="@drawable/ic_channels"
-            android:text="@string/menu_channels" />
+    <ScrollView
+        android:id="@+id/channels_scroller"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="3dp" >
 
         <LinearLayout
             android:id="@+id/container_channels"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginRight="8dp"
             android:orientation="vertical" >
         </LinearLayout>
+    </ScrollView>
 
-        <TextView
-            style="@style/MenuHeaderChannel"
-            android:drawableLeft="@drawable/ic_display"
-            android:text="@string/menu_display" />
+    <TextView
+        style="@style/MenuHeaderChannel"
+        android:drawableLeft="@drawable/ic_display"
+        android:text="@string/menu_display" />
 
-        <RadioGroup
-            android:id="@+id/radioGroupSlidingMenu"
-            android:layout_width="match_parent"
+    <RadioGroup
+        android:id="@+id/radioGroupSlidingMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp" >
+
+        <RadioButton
+            android:id="@+id/radioButtonAll"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp" >
+            android:checked="true"
+            android:text="@string/menu_all" />
 
-            <RadioButton
-                android:id="@+id/radioButtonAll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="@string/menu_all" />
+        <RadioButton
+            android:id="@+id/radioButtonRead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/menu_read" />
 
-            <RadioButton
-                android:id="@+id/radioButtonRead"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/menu_read" />
+        <RadioButton
+            android:id="@+id/radioButtonUnread"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/menu_unread" />
+    </RadioGroup>
 
-            <RadioButton
-                android:id="@+id/radioButtonUnread"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/menu_unread" />
-        </RadioGroup>
+    <Button
+        android:id="@+id/buttonRefreshListView"
+        style="@style/ButtonMenuSliding"
+        android:text="@string/menu_refresh_list_view" />
 
-        <Button
-            android:id="@+id/buttonRefreshListView"
-            style="@style/ButtonMenuSliding"
-            android:layout_width="match_parent"
-            android:layout_marginBottom="10dp"
-            android:text="@string/menu_refresh_list_view" />
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>

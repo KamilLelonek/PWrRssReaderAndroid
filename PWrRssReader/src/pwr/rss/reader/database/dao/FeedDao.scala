@@ -111,7 +111,7 @@ class FeedDao(private val database: SQLiteDatabase) extends DAO(database) {
 	private def addSelectedClause(whereClause: StringBuilder, selectionArgs: ArrayBuffer[String]) = {
 		addConnectiveToWhereClauses(whereClause, selectionArgs)
 		addToWhereClause(whereClause, C_SELECTED + " =?")
-		addToSelectionArgs(selectionArgs, true)
+		addToSelectionArgs(selectionArgs, 1.toString)
 	}
 
 	private def addFilterClause(filterQuery: String, whereClause: StringBuilder, selectionArgs: ArrayBuffer[String]) =

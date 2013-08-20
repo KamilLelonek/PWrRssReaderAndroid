@@ -1,24 +1,20 @@
 package pwr.rss.reader.data.dao
 
-import scala.collection.JavaConversions
-import scala.collection.mutable.MutableList
+import scala.collection.mutable.ArrayBuffer
+
 import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import android.provider.BaseColumns
 import pwr.rss.reader.database.dao.Channel
-import pwr.rss.reader.data.dao.ChannelDao._
 import pwr.rss.reader.database.dao.DAO
 import pwr.rss.reader.database.tables.SQLQueries
-import pwr.rss.reader.database.tables.SQLQueries.INSERT
-import pwr.rss.reader.database.tables.TableChannels.C_SITE
 import pwr.rss.reader.database.tables.TableChannels.C_LOGO
 import pwr.rss.reader.database.tables.TableChannels.C_NAME
 import pwr.rss.reader.database.tables.TableChannels.C_SELECTED
+import pwr.rss.reader.database.tables.TableChannels.C_SITE
 import pwr.rss.reader.database.tables.TableChannels.TABLE_NAME_CHANNELS
-import scala.collection.JavaConversions
-import android.util.Log
-import scala.collection.mutable.ListBuffer
+import pwr.rss.reader.data.dao.ChannelDao._
+import scala.collection.JavaConversions._
 
 object ChannelDao {
 	private val STATEMENT_INSERT = SQLQueries.INSERT + TABLE_NAME_CHANNELS +
@@ -54,7 +50,7 @@ class ChannelDao(private val database: SQLiteDatabase) extends DAO(database) {
 	  */
 
 	def getAllChannelsList = {
-		val listOfChannels = ListBuffer[Channel]()
+		val listOfChannels = ArrayBuffer[Channel]()
 		val cursor = getAllChannelsCursor
 
 		if (cursor.moveToFirst) {
@@ -68,13 +64,36 @@ class ChannelDao(private val database: SQLiteDatabase) extends DAO(database) {
 		listOfChannels
 	}
 
-	def getAllChannelsJavaList = getAllChannelsList toList
+	def getAllChannelsJavaList = asJavaList[Channel](getAllChannelsList)
+
+	def getSelectedChannelsIds = {
+		val channelsIDs = ArrayBuffer[Int]()
+		val cursor = getSelectedChannelsCursor
+		val channelIdIndex = cursor.getColumnIndex(SQLQueries.ID)
+
+		if (cursor.moveToFirst) {
+			do {
+				channelsIDs += cursor.getInt(channelIdIndex)
+			} while (cursor.moveToNext)
+		}
+		if (!cursor.isClosed) cursor.close
+
+		asJavaList[Int](channelsIDs)
+	}
 
 	private def getAllChannelsCursor =
 		database.query(
 			TABLE_NAME_CHANNELS,
 			Array(SQLQueries.ID, C_NAME, C_LOGO, C_SITE, C_SELECTED),
-			null, null, null, null, C_NAME)
+			null, null, null, null, null)
+
+	private def getSelectedChannelsCursor =
+		database.query(
+			TABLE_NAME_CHANNELS,
+			Array(SQLQueries.ID),
+			C_SELECTED + "=?",
+			Array(1.toString),
+			null, null, null)
 
 	private def buildChannelFromCursor(cursor: Cursor) = {
 		if (cursor.getCount == 0) null

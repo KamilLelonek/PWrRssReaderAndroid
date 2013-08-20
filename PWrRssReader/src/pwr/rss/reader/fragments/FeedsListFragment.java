@@ -411,6 +411,7 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 	
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
+		position--;
 		switchActionMode();
 		
 		if (isInActionMode) {
@@ -506,7 +507,7 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 			}
 			
 			restartLoaderIfNecessary(itemsSize);
-			mode.finish();
+			finishActionMode();
 			return true;
 		}
 		
@@ -564,7 +565,7 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		super.onListItemClick(l, v, position, id);
+		position--;
 		
 		if (isInActionMode) {
 			checkItem(position, v);
