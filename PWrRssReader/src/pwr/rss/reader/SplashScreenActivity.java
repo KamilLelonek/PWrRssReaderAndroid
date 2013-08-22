@@ -11,8 +11,7 @@ import android.view.View;
 
 public class SplashScreenActivity extends Activity {
 	public static final String TAG_SPLASH_SCREEN = "SplashScreen";
-	public static final int SPLASH_SCREEN_DISPLAY_DURATION = 2 * 1000; // 2
-																		// seconds
+	public static final int SPLASH_SCREEN_DISPLAY_DURATION = 2 * 1000; // 2 seconds
 	/*
 	 * Action to be executed as some point in the future
 	 */
@@ -22,8 +21,7 @@ public class SplashScreenActivity extends Activity {
 			finishAndStartMainActivity();
 		}
 	};
-	private final Handler handler = new Handler(); // Scheduler for executing
-													// actions
+	private final Handler handler = new Handler(); // Scheduler for executing actions
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +83,9 @@ public class SplashScreenActivity extends Activity {
 	}
 	
 	private void showInstructionOnFirstRun() {
-		if (((ApplicationObject) getApplication()).isFirstRun()) {
+		ApplicationObject application = (ApplicationObject) getApplication();
+		if (application.isFirstRun()) {
+			application.setFirstRun();
 			startActivity(getInstructionActivityIntent());
 		}
 	}

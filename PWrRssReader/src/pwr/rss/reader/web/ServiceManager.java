@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
@@ -17,12 +18,16 @@ public class ServiceManager
 	extends IntentService
 	implements OnSharedPreferenceChangeListener {
 	
+	private static final int DELAY = 3 * 1000; // 3 seconds
+	
 	private SharedPreferences sharedPreferences;
 	private AlarmManager alarmManager;
 	private ApplicationObject applicationObject;
 	private PendingIntent startDownloadServicePendingIntent;
 	private Context context;
 	private Intent wakeReceiverBroadcast;
+	private Handler handler;
+	private Runnable startServiceRunnable;
 	
 	public ServiceManager() {
 		super("ServiceManager");
@@ -36,6 +41,13 @@ public class ServiceManager
 		this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 		this.sharedPreferences.registerOnSharedPreferenceChangeListener(this);
 		this.alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+		this.handler = new Handler();
+		this.startServiceRunnable = new Runnable() {
+			@Override
+			public void run() {
+				sendBroadcast(wakeReceiverBroadcast);
+			}
+		};
 		
 		createWakeReceiverBroadcast();
 	}
@@ -69,6 +81,7 @@ public class ServiceManager
 		if (isAutoRefreshEnabled()) {
 			setDownloadUpdateRequest();
 		}
+		handler.postDelayed(startServiceRunnable, DELAY);
 	}
 	
 	private boolean isAutoRefreshEnabled() {
