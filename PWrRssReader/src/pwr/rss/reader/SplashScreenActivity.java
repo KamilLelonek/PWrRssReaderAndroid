@@ -11,7 +11,8 @@ import android.view.View;
 
 public class SplashScreenActivity extends Activity {
 	public static final String TAG_SPLASH_SCREEN = "SplashScreen";
-	public static final int SPLASH_SCREEN_DISPLAY_DURATION = 2 * 1000; // 2 seconds
+	public static final int SPLASH_SCREEN_DISPLAY_DURATION = 2 * 1000; // 2
+																		// seconds
 	/*
 	 * Action to be executed as some point in the future
 	 */
@@ -21,7 +22,8 @@ public class SplashScreenActivity extends Activity {
 			finishAndStartMainActivity();
 		}
 	};
-	private final Handler handler = new Handler(); // Scheduler for executing actions
+	private final Handler handler = new Handler(); // Scheduler for executing
+													// actions
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +31,7 @@ public class SplashScreenActivity extends Activity {
 		setContentView(R.layout.activity_splash_screen);
 		
 		initProgressBar();
-		
 		openDelayedMainActiviy();
-		startServiceManager();
 	}
 	
 	/**
@@ -45,17 +45,11 @@ public class SplashScreenActivity extends Activity {
 	}
 	
 	/**
-	 * Starts manager which handle download service and wakelock receiver
-	 */
-	private void startServiceManager() {
-		startService(new Intent(SplashScreenActivity.this, ServiceManager.class));
-	}
-	
-	/**
 	 * Dispatch action to start main activity after some time
 	 */
 	private void openDelayedMainActiviy() {
-		handler.postDelayed(openMainActivityRequest, SPLASH_SCREEN_DISPLAY_DURATION);
+		handler.postDelayed(openMainActivityRequest,
+			SPLASH_SCREEN_DISPLAY_DURATION);
 	}
 	
 	/**
@@ -84,12 +78,35 @@ public class SplashScreenActivity extends Activity {
 	}
 	
 	private void finishAndStartMainActivity() {
-		startActivity(getFinishingIntent());
+		startServiceManager();
+		startActivity(getMainActivityIntent());
+		showInstructionOnFirstRun();
 		finish();
 	}
 	
-	private Intent getFinishingIntent() {
-		return new Intent(SplashScreenActivity.this, FeedsListActivity.class);
+	private void showInstructionOnFirstRun() {
+		if (((ApplicationObject) getApplication()).isFirstRun()) {
+			startActivity(getInstructionActivityIntent());
+		}
+	}
+	
+	/**
+	 * Starts manager which handle download service and wakelock receiver
+	 */
+	private void startServiceManager() {
+		startService(new Intent(SplashScreenActivity.this, ServiceManager.class));
+	}
+	
+	private Intent getInstructionActivityIntent() {
+		return getActivityIntent(FeedsListInstructionActivity.class);
+	}
+	
+	private Intent getMainActivityIntent() {
+		return getActivityIntent(FeedsListActivity.class);
+	}
+	
+	private Intent getActivityIntent(Class<?> cls) {
+		return new Intent(SplashScreenActivity.this, cls);
 	}
 	
 	/**

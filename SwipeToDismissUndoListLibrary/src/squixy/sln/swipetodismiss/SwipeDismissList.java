@@ -6,7 +6,7 @@ import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
 
 import java.io.Serializable;
 
-import undobar.controller.library.UndoBarControllerNotAutoCancelable;
+import undobar.controller.library.UndoBarController;
 import undobar.controller.library.UndoBarListener;
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
@@ -63,7 +63,7 @@ public final class SwipeDismissList implements View.OnTouchListener, OnScrollLis
 	private Undoable undoAction;
 	private int messageResourceId;
 	private Handler hideUndoPopupHandler;
-	private UndoBarControllerNotAutoCancelable undoBarController;
+	private UndoBarController undoBarController;
 	private Resources resources;
 	
 	/**
@@ -79,7 +79,7 @@ public final class SwipeDismissList implements View.OnTouchListener, OnScrollLis
 		this.messageResourceId = messageResourceId;
 		this.listView = listView;
 		this.callback = callback;
-		this.undoBarController = new UndoBarControllerNotAutoCancelable(listView);
+		this.undoBarController = new UndoBarController(listView);
 		this.undoBarController.registerUndoBarListener(this);
 		this.hideUndoPopupHandler = new HideUndoPopupHandler();
 		

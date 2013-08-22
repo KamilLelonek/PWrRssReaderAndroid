@@ -58,7 +58,6 @@ class FeedsListActivity extends SlidingFragmentActivity with OnMenuListActionLis
 
 	private def configureActionBar = {
 		val actionBar = getSupportActionBar
-		if (application.isFirstRun) setSupportProgressBarIndeterminateVisibility(true)
 		actionBar setHomeButtonEnabled (true)
 		actionBar setIcon (R.drawable.ic_menu)
 		setSlidingActionBarEnabled(true)

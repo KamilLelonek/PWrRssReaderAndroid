@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="pwr.rss.reader"
     android:versionCode="3"
@@ -17,13 +18,13 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
-        android:name=".ApplicationObject"
+        android:name="pwr.rss.reader.ApplicationObject"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".SplashScreenActivity"
+            android:name="pwr.rss.reader.SplashScreenActivity"
             android:label="@string/app_name"
             android:noHistory="true"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
@@ -34,20 +35,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".FeedsListActivity"
+            android:name="pwr.rss.reader.FeedsListActivity"
             android:clearTaskOnLaunch="true"
             android:launchMode="singleTop" />
-        <activity android:name=".FeedDetailsActivity" />
-        <activity android:name=".PreferencesNotificationActivity" />
-        <activity android:name=".PreferencesActivity" >
+        <activity android:name="pwr.rss.reader.FeedDetailsActivity" />
+        <activity android:name="pwr.rss.reader.PreferencesNotificationActivity" />
+        <activity android:name="pwr.rss.reader.PreferencesActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MANAGE_NETWORK_USAGE" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="pwr.rss.reader.FeedsListInstructionActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="pwr.rss.reader.FeedDetailsInstructionActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <receiver android:name=".web.WakeReceiver" >
+        <receiver android:name="pwr.rss.reader.web.WakeReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_SCREEN_ON" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -55,14 +62,14 @@
                 <action android:name="pwr.rss.reader.action.start_download" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".web.NetworkStateReceiver" >
+        <receiver android:name="pwr.rss.reader.web.NetworkStateReceiver" >
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
 
-        <service android:name=".web.DownloadService" />
-        <service android:name=".web.ServiceManager" />
+        <service android:name="pwr.rss.reader.web.DownloadService" />
+        <service android:name="pwr.rss.reader.web.ServiceManager" />
     </application>
 
 </manifest>

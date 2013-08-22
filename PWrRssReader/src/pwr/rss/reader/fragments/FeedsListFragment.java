@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import pwr.rss.reader.ApplicationObject;
 import pwr.rss.reader.FeedDetailsActivity;
+import pwr.rss.reader.FeedDetailsInstructionActivity;
 import pwr.rss.reader.FeedsListActivity;
 import pwr.rss.reader.OnMenuListActionListener;
 import pwr.rss.reader.R;
@@ -66,7 +67,7 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 	
 	private static final int LOADER_ID = 0x213;
 	private static int COLOR_BLUE;
-	private final Intent downloadIntent = new Intent(DownloadService.ACTION_START_DOWNLOAD);
+	private final Intent downloadIntent = new Intent(DownloadService.ACTION_START_DOWNLOAD());
 	
 	private FeedsListActivity activity;
 	private UndoBarController undoBarController;
@@ -159,8 +160,8 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 	
 	private IntentFilter getIntentFilterForBroadcastReceiver() {
 		IntentFilter intentFilter = new IntentFilter();
-		intentFilter.addAction(DownloadService.ACTION_DOWNLOAD_COMPLETED);
-		intentFilter.addAction(DownloadService.ACTION_DEVICE_OFFLINE);
+		intentFilter.addAction(DownloadService.ACTION_DOWNLOAD_COMPLETED());
+		intentFilter.addAction(DownloadService.ACTION_DEVICE_OFFLINE());
 		intentFilter.addAction(ACTION_REFRESH);
 		return intentFilter;
 	}
@@ -215,7 +216,7 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 	
 	@Override
 	public Undoable onDismiss(android.widget.AbsListView listView, int position) {
-		final Feed deletedFeed = dismissFeedAndReturn(position);
+		final Feed deletedFeed = dismissFeedAndReturn(position - 1);
 		restartLoader();
 		
 		return new Undoable() {
@@ -270,7 +271,6 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 			showAlertDeviceOffline();
 			hireRefreshListHeader();
 		}
-		activity.setSupportProgressBarIndeterminateVisibility(false);
 	}
 	
 	private void hireRefreshListHeader() {
@@ -577,8 +577,22 @@ public class FeedsListFragment extends SherlockListFragment implements OnRefresh
 	}
 	
 	private void openFeedDetails(int position) {
-		startActivity(getFeedDetailsIntent(position - 1));
-		activity.overridePendingTransition(0, 0);
+		startActivity(getFeedDetailsIntent(position));
+		showDetailsInstructionOnFirstRun();
+	}
+	
+	private void showDetailsInstructionOnFirstRun() {
+		if (applicationObject.isFirstDetailsRun()) {
+			startActivity(getFeedDetailsInstructionActivity());
+			applicationObject.setFirstDetailsRun();
+		}
+		else {
+			activity.overridePendingTransition(0, 0);
+		}
+	}
+	
+	private Intent getFeedDetailsInstructionActivity() {
+		return new Intent(activity, FeedDetailsInstructionActivity.class);
 	}
 	
 	private Intent getFeedDetailsIntent(int position) {

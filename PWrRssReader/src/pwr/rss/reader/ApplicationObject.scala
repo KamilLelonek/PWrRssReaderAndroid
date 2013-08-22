@@ -2,7 +2,6 @@ package pwr.rss.reader
 
 import java.lang.Long
 import java.util.ArrayList
-import java.util.List;
 
 import android.app.ActivityManager
 import android.app.Application
@@ -13,9 +12,9 @@ import android.net.wifi.WifiManager
 import pwr.rss.reader.database.dao.Channel
 import pwr.rss.reader.database.dao.Feed
 import pwr.rss.reader.database.manager.DataBaseManager
-import pwr.rss.reader.utils.ToastFactory
-import pwr.rss.reader.utils.PreferencesManager
 import pwr.rss.reader.notifications.NotificationsManager
+import pwr.rss.reader.utils.PreferencesManager
+import pwr.rss.reader.utils.ToastFactory
 
 class ApplicationObject extends Application {
 	/**
@@ -27,6 +26,8 @@ class ApplicationObject extends Application {
 
 	def isFirstRun = preferencesManager.isFirstRun
 	def setFirstRun = preferencesManager.setFirstRun
+	def isFirstDetailsRun = preferencesManager.isFirstDetailsRun
+	def setFirstDetailsRun = preferencesManager.setFirstDetailsRun
 	def isAutoRefreshEnabled = preferencesManager.isAutoRefreshEnabled
 	def getRefreshPeriod = preferencesManager.getRefreshPeriod.toInt
 	def areNotificationsEnabled = preferencesManager.areNotificationsEnabled
@@ -37,8 +38,8 @@ class ApplicationObject extends Application {
 	def getSelectedRadioButtonId = preferencesManager.getSelectedRadioButtonId
 	def setSelectedRadioButtonId(id: Int) = preferencesManager.setSelectedRadioButtonId(id)
 	def keepFeedsAsRead = preferencesManager.keepFeedsAsRead
-	def getLastUpdateDate = preferencesManager.getLastUpdateDate
-	def setLastUpdateDate = preferencesManager.setLastUpdateDate
+	def getLastUpdateDate(channelID: Int) = preferencesManager.getLastUpdateDate(channelID: Int)
+	def setLastUpdateDate(channelID: Int) = preferencesManager.setLastUpdateDate(channelID: Int)
 	def imagesOnlyOnWifi = preferencesManager.imagesOnlyOnWifi
 
 	/**
@@ -62,7 +63,7 @@ class ApplicationObject extends Application {
 	def setFilterQuery(query: String) = filterQuery = query
 
 	def getAllChannelsList = databaseManager.getAllChannelsList
-	def getSelectedChannelsIds: java.util.List[Int] = databaseManager.getSelectedChannelsIds
+	def getSelectedChannelsIds = databaseManager.getSelectedChannelsIds
 	def selectChannel(channel: Channel) = databaseManager.selectChannel(channel)
 	def addFeed(feed: Feed) = databaseManager.addFeed(feed)
 	def addFeeds(feeds: ArrayList[Feed]) = databaseManager.addFeeds(feeds)

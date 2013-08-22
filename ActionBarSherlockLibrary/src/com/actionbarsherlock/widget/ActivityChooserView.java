@@ -9,6 +9,7 @@
 
 package com.actionbarsherlock.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -59,7 +60,7 @@ import com.actionbarsherlock.widget.ActivityChooserModel.ActivityChooserModelCli
  * 
  * @hide
  */
-@SuppressWarnings("deprecation")
+@SuppressLint("NewApi")
 class ActivityChooserView extends ViewGroup implements ActivityChooserModelClient {
 	
 	/**
@@ -97,6 +98,11 @@ class ActivityChooserView extends ViewGroup implements ActivityChooserModelClien
 	 * The default activities action button;
 	 */
 	private final FrameLayout mDefaultActivityButton;
+	
+	/**
+	 * The image for the default activities action button;
+	 */
+	private final ImageView mDefaultActivityButtonImage;
 	
 	/**
 	 * The maximal width of the list popup.
@@ -168,6 +174,11 @@ class ActivityChooserView extends ViewGroup implements ActivityChooserModelClien
 	 */
 	private boolean mIsAttachedToWindow;
 	
+	/**
+	 * String resource for formatting content description of the default target.
+	 */
+	private int mDefaultActionButtonContentDescription;
+	
 	private final Context mContext;
 	
 	/**
@@ -200,14 +211,15 @@ class ActivityChooserView extends ViewGroup implements ActivityChooserModelClien
 		super(context, attrs, defStyle);
 		mContext = context;
 		
-		TypedArray attributesArray = context.obtainStyledAttributes(attrs, R.styleable.SherlockActivityChooserView,
-			defStyle, 0);
+		TypedArray attributesArray = context.obtainStyledAttributes(attrs,
+			R.styleable.SherlockActivityChooserView, defStyle, 0);
 		
-		mInitialActivityCount = attributesArray.getInt(R.styleable.SherlockActivityChooserView_initialActivityCount,
+		mInitialActivityCount = attributesArray.getInt(
+			R.styleable.SherlockActivityChooserView_initialActivityCount,
 			ActivityChooserViewAdapter.MAX_ACTIVITY_COUNT_DEFAULT);
 		
-		Drawable expandActivityOverflowButtonDrawable = attributesArray
-			.getDrawable(R.styleable.SherlockActivityChooserView_expandActivityOverflowButtonDrawable);
+		Drawable expandActivityOverflowButtonDrawable = attributesArray.getDrawable(
+			R.styleable.SherlockActivityChooserView_expandActivityOverflowButtonDrawable);
 		
 		attributesArray.recycle();
 		
@@ -222,10 +234,12 @@ class ActivityChooserView extends ViewGroup implements ActivityChooserModelClien
 		mDefaultActivityButton = (FrameLayout) findViewById(R.id.abs__default_activity_button);
 		mDefaultActivityButton.setOnClickListener(mCallbacks);
 		mDefaultActivityButton.setOnLongClickListener(mCallbacks);
+		mDefaultActivityButtonImage = (ImageView) mDefaultActivityButton.findViewById(R.id.abs__image);
 		
 		mExpandActivityOverflowButton = (FrameLayout) findViewById(R.id.abs__expand_activities_button);
 		mExpandActivityOverflowButton.setOnClickListener(mCallbacks);
-		mExpandActivityOverflowButtonImage = (ImageView) mExpandActivityOverflowButton.findViewById(R.id.abs__image);
+		mExpandActivityOverflowButtonImage =
+			(ImageView) mExpandActivityOverflowButton.findViewById(R.id.abs__image);
 		mExpandActivityOverflowButtonImage.setImageDrawable(expandActivityOverflowButtonDrawable);
 		
 		mAdapter = new ActivityChooserViewAdapter();
@@ -316,7 +330,8 @@ class ActivityChooserView extends ViewGroup implements ActivityChooserModelClien
 		
 		getViewTreeObserver().addOnGlobalLayoutListener(mOnGlobalLayoutListener);
 		
-		final boolean defaultActivityButtonShown = mDefaultActivityButton.getVisibility() == VISIBLE;
+		final boolean defaultActivityButtonShown =
+			mDefaultActivityButton.getVisibility() == VISIBLE;
 		
 		final int activityCount = mAdapter.getActivityCount();
 		final int maxActivityCountOffset = defaultActivityButtonShown ? 1 : 0;
@@ -344,8 +359,8 @@ class ActivityChooserView extends ViewGroup implements ActivityChooserModelClien
 			if (mProvider != null) {
 				mProvider.subUiVisibilityChanged(true);
 			}
-			popupWindow.getListView().setContentDescription(
-				mContext.getString(R.string.abs__activitychooserview_choose_application));
+			popupWindow.getListView().setContentDescription(mContext.getString(
+				R.string.abs__activitychooserview_choose_application));
 		}
 	}
 	
@@ -415,8 +430,8 @@ class ActivityChooserView extends ViewGroup implements ActivityChooserModelClien
 		// ActionBar so if this widget is used in the latter it will look as
 		// a normal action button.
 		if (mDefaultActivityButton.getVisibility() != VISIBLE) {
-			heightMeasureSpec = MeasureSpec
-				.makeMeasureSpec(MeasureSpec.getSize(heightMeasureSpec), MeasureSpec.EXACTLY);
+			heightMeasureSpec = MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(heightMeasureSpec),
+				MeasureSpec.EXACTLY);
 		}
 		measureChild(child, widthMeasureSpec, heightMeasureSpec);
 		setMeasuredDimension(child.getMeasuredWidth(), child.getMeasuredHeight());
@@ -467,7 +482,9 @@ class ActivityChooserView extends ViewGroup implements ActivityChooserModelClien
 	 * 
 	 * @param resourceId The resource id.
 	 */
-	public void setDefaultActionButtonContentDescription(int resourceId) {}
+	public void setDefaultActionButtonContentDescription(int resourceId) {
+		mDefaultActionButtonContentDescription = resourceId;
+	}
 	
 	/**
 	 * Gets the list popup window which is lazily initialized.
@@ -497,20 +514,17 @@ class ActivityChooserView extends ViewGroup implements ActivityChooserModelClien
 		else {
 			mExpandActivityOverflowButton.setEnabled(false);
 		}
+		
 		mDefaultActivityButton.setVisibility(View.GONE);
-		if (mDefaultActivityButton.getVisibility() == VISIBLE) {
-			mActivityChooserContent.setBackgroundDrawable(mActivityChooserContentBackground);
-		}
-		else {
-			mActivityChooserContent.setBackgroundDrawable(null);
-		}
+		mActivityChooserContent.setBackgroundDrawable(null);
+		mActivityChooserContent.setPadding(0, 0, 0, 0);
 	}
 	
 	/**
 	 * Interface implementation to avoid publishing them in the APIs.
 	 */
-	private class Callbacks implements AdapterView.OnItemClickListener, View.OnClickListener, View.OnLongClickListener,
-		PopupWindow.OnDismissListener {
+	private class Callbacks implements AdapterView.OnItemClickListener,
+		View.OnClickListener, View.OnLongClickListener, PopupWindow.OnDismissListener {
 		
 		// AdapterView#OnItemClickListener
 		@Override
@@ -653,7 +667,7 @@ class ActivityChooserView extends ViewGroup implements ActivityChooserModelClien
 		@Override
 		public int getItemViewType(int position) {
 			if (mShowFooterView && position == getCount() - 1) return ITEM_VIEW_TYPE_FOOTER;
-			return ITEM_VIEW_TYPE_ACTIVITY;
+			else return ITEM_VIEW_TYPE_ACTIVITY;
 		}
 		
 		@Override
@@ -706,7 +720,8 @@ class ActivityChooserView extends ViewGroup implements ActivityChooserModelClien
 							R.layout.abs__activity_chooser_view_list_item, parent, false);
 						convertView.setId(ITEM_VIEW_TYPE_FOOTER);
 						TextView titleView = (TextView) convertView.findViewById(R.id.abs__title);
-						titleView.setText(mContext.getString(R.string.abs__activity_chooser_view_see_all));
+						titleView.setText(mContext.getString(
+							R.string.abs__activity_chooser_view_see_all));
 					}
 					return convertView;
 				case ITEM_VIEW_TYPE_ACTIVITY:
@@ -783,6 +798,10 @@ class ActivityChooserView extends ViewGroup implements ActivityChooserModelClien
 			return mDataModel.getActivityCount();
 		}
 		
+		public int getHistorySize() {
+			return mDataModel.getHistorySize();
+		}
+		
 		public int getMaxActivityCount() {
 			return mMaxActivityCount;
 		}
@@ -791,8 +810,10 @@ class ActivityChooserView extends ViewGroup implements ActivityChooserModelClien
 			return mDataModel;
 		}
 		
-		public void setShowDefaultActivity(boolean showDefaultActivity, boolean highlightDefaultActivity) {
-			if (mShowDefaultActivity != showDefaultActivity || mHighlightDefaultActivity != highlightDefaultActivity) {
+		public void setShowDefaultActivity(boolean showDefaultActivity,
+			boolean highlightDefaultActivity) {
+			if (mShowDefaultActivity != showDefaultActivity
+				|| mHighlightDefaultActivity != highlightDefaultActivity) {
 				mShowDefaultActivity = showDefaultActivity;
 				mHighlightDefaultActivity = highlightDefaultActivity;
 				notifyDataSetChanged();

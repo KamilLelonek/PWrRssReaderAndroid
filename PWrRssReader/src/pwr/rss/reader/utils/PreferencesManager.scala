@@ -9,6 +9,7 @@ import java.util.Date
 
 object PreferencesManager {
 	private lazy val KEY_IS_FIRST_RUN = "is_first_run"
+	private lazy val KEY_IS_FIRST_DETAILS_RUN = "is_first_details_run"
 }
 
 class PreferencesManager(context: Context) {
@@ -20,20 +21,23 @@ class PreferencesManager(context: Context) {
 	def isNotificationLedEnabled = getBooleanOrTrue(KEY_NOTIFICATIONS_LED)
 	def isNotificationVibrateEnabled = getBooleanOrTrue(KEY_NOTIFICATIONS_VIBRATIONS)
 	def isNotificationSoundEnabled = getBooleanOrTrue(KEY_NOTIFICATIONS_SOUND)
-	def keepFeedsAsRead = getBooleanOrTrue(KEY_KEEP_READ_FEEDS)
-	def autoMarkAsRead = getBooleanOrFalse(KEY_AUTO_MARK_AS_READ)
+	def keepFeedsAsRead = getBooleanOrFalse(KEY_KEEP_READ_FEEDS)
+	def autoMarkAsRead = getBooleanOrTrue(KEY_AUTO_MARK_AS_READ)
 	def imagesOnlyOnWifi = getBooleanOrTrue(KEY_IMAGES_ONLY_WIFI)
 
 	def getSelectedRadioButtonId = sharedPreferences.getInt(KEY_CHECKED_RADIO_BUTTON, R.id.radioButtonAll)
 	def setSelectedRadioButtonId(radioButtonId: Int) =
 		putValueToPreferences(KEY_CHECKED_RADIO_BUTTON, radioButtonId)
 
-	def getLastUpdateDate = getLong(KEY_LAST_UPDATED)
-	def setLastUpdateDate =
-		putValueToPreferences(KEY_LAST_UPDATED, System.currentTimeMillis)
+	def getLastUpdateDate(channelID: Int) = getLong(KEY_LAST_UPDATED + channelID)
+	def setLastUpdateDate(channelID: Int) =
+		putValueToPreferences(KEY_LAST_UPDATED + channelID, System.currentTimeMillis)
 
 	def isFirstRun = getBooleanOrTrue(KEY_IS_FIRST_RUN)
 	def setFirstRun = putValueToPreferences(KEY_IS_FIRST_RUN, false)
+
+	def isFirstDetailsRun = getBooleanOrTrue(KEY_IS_FIRST_DETAILS_RUN)
+	def setFirstDetailsRun = putValueToPreferences(KEY_IS_FIRST_DETAILS_RUN, false)
 
 	private def putValueToPreferences[T](key: String, value: T) = {
 		val sharedPrefEditor = sharedPreferences.edit

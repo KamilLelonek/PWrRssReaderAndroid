@@ -1,7 +1,6 @@
 package pwr.rss.reader.data.dao
 
 import scala.collection.mutable.ArrayBuffer
-
 import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -15,6 +14,7 @@ import pwr.rss.reader.database.tables.TableChannels.C_SITE
 import pwr.rss.reader.database.tables.TableChannels.TABLE_NAME_CHANNELS
 import pwr.rss.reader.data.dao.ChannelDao._
 import scala.collection.JavaConversions._
+import scala.collection.mutable.ListBuffer
 
 object ChannelDao {
 	private val STATEMENT_INSERT = SQLQueries.INSERT + TABLE_NAME_CHANNELS +
@@ -64,10 +64,8 @@ class ChannelDao(private val database: SQLiteDatabase) extends DAO(database) {
 		listOfChannels
 	}
 
-	def getAllChannelsJavaList = asJavaList[Channel](getAllChannelsList)
-
 	def getSelectedChannelsIds = {
-		val channelsIDs = ArrayBuffer[Int]()
+		val channelsIDs = ListBuffer[Int]()
 		val cursor = getSelectedChannelsCursor
 		val channelIdIndex = cursor.getColumnIndex(SQLQueries.ID)
 
@@ -78,7 +76,7 @@ class ChannelDao(private val database: SQLiteDatabase) extends DAO(database) {
 		}
 		if (!cursor.isClosed) cursor.close
 
-		asJavaList[Int](channelsIDs)
+		channelsIDs toList
 	}
 
 	private def getAllChannelsCursor =

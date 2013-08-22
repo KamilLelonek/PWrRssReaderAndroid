@@ -8,21 +8,18 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
-import java.util.List
-import scala.collection.JavaConversions._
 
 object HttpConnection {
-	//	final lazy val GET_FEEDS_FROM_CHANNELS = "http://192.168.1.110:9000/getAllFeeds/"
-	final lazy val GET_FEEDS_FROM_CHANNELS = "http://pwrrssreader.herokuapp.com/getAllFeeds/"
+	//	final lazy val GET_FEEDS_FROM_CHANNELS = "http://192.168.1.110:9000/feedsByIdAndTime/"
+	final lazy val GET_FEEDS_FROM_CHANNELS = "http://pwrrssreader.herokuapp.com/feedsByIdAndTime/"
 	final lazy val EMPTY_JSON = "{}"
-	private final lazy val TIMEOUT = 30 * 1000 // 10s
 
-	def getInputString(lastUpdateTime: Long, selectedChannelsIds: List[Int]) =
-		inputStreamToString(openInputStream(lastUpdateTime, selectedChannelsIds))
+	def getInputString(lastUpdateTimes: List[Long], selectedChannelsIds: List[Int]) =
+		inputStreamToString(openInputStream(lastUpdateTimes, selectedChannelsIds))
 
-	private def openInputStream(lastUpdateTime: Long, selectedChannelsIds: List[Int]) = {
+	private def openInputStream(lastUpdateTimes: List[Long], selectedChannelsIds: List[Int]) = {
 		try {
-			val url = new URL(GET_FEEDS_FROM_CHANNELS + lastUpdateTime)
+			val url = buildUrl(lastUpdateTimes, selectedChannelsIds)
 			val urlConnection = openUrlConnection(url)
 			new BufferedInputStream(urlConnection.getInputStream)
 		}
@@ -35,25 +32,14 @@ object HttpConnection {
 		}
 	}
 
-	/* For future use */
-	/**
-	  * USAGE:
-	  *
-	  * 	final lazy val GET_FEEDS_FROM_CHANNELS = "http://192.168.1.110:9000/feedsFromChannels/"
-	  *  	val url = buildUrl(lastUpdateTime, selectedChannelsIds)
-	  *
-	  */
-	private def buildUrl(lastUpdateTime: Long, selectedChannelsIds: List[Int]) =
+	private def buildUrl(lastUpdateTimes: List[Long], selectedChannelsIds: List[Int]) =
 		new URL(
 			GET_FEEDS_FROM_CHANNELS +
-				lastUpdateTime +
-				"/" + selectedChannelsIds.mkString("&"))
+				selectedChannelsIds.mkString("&") +
+				"/" +
+				lastUpdateTimes.mkString("&"))
 
-	private def openUrlConnection(url: URL) = {
-		val urlConnection = url.openConnection.asInstanceOf[HttpURLConnection]
-		urlConnection.setReadTimeout(TIMEOUT)
-		urlConnection
-	}
+	private def openUrlConnection(url: URL) = url.openConnection.asInstanceOf[HttpURLConnection]
 
 	private def inputStreamToString(is: InputStream) = {
 		val inputStreamReader = new InputStreamReader(is)

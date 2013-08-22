@@ -101,5 +101,19 @@
     <string name="contentDescription_toast_refresh">Ikona toast</string>
     <string name="contentDescription_scroll">Przewiń do góry</string>
     <string name="contentDescription_url">Odnośnik do wiadomości</string>
+    <string name="contentDescription_arrow">Strzałka instrukcji</string>
+
+    <!-- Instruction Activity -->
+    <string name="instruction_pull_down_to_refresh">POCIĄGNIJ W DÓŁ ŻEBY ZAKTUALIZOWAĆ</string>
+    <string name="instruction_pull_up_to_mark_all_as_read">POCIĄGNIJ W DÓŁ ŻEBY OZNACZYĆ WSZYSTKIE JAKO PRZECZYTANE</string>
+    <string name="instruction_slide_right_to_select_channels">PRZESUŃ W LEWO ŻEBY WYBRAĆ KANAŁY</string>
+    <string name="instruction_click_to_show_menu">KLIKNIJ ŻEBY POKAZAĆ MENU</string>
+    <string name="instruction_expand_to_filter_feeds">KLIKNIJ ŻEBY FILTROWAĆ WIADOMOŚCI</string>
+    <string name="instruction_go_back">WRÓĆ DO LISTY</string>
+    <string name="instruction_share">PODZIEL SIĘ LINKIEM</string>
+    <string name="instruction_zoom_image">JEŻELI OBRAZEK JEST DOSTĘPNY MOŻESZ GO POWIĘKSZYĆ</string>
+    <string name="instruction_switch_cards">PRZEŁĄCZAJ MIĘDZY KARTAMI</string>
+    <string name="instruction_switch_feeds">PRZECIĄGAJ ŻEBY PRZEGLĄDAĆ WIADOMOŚCI</string>
+    <string name="instruction_open_webpage">OTWÓRZ STRONĘ INTERNETOWĄ</string>
 
 </resources>

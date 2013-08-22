@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="app_name">PWrRssReader</string>
@@ -99,5 +100,19 @@
     <string name="contentDescription_toast_refresh">Toast refresh</string>
     <string name="contentDescription_scroll">Scroll to top</string>
     <string name="contentDescription_url">Link to feed</string>
+    <string name="contentDescription_arrow">Instruction arrow</string>
+
+    <!-- Instruction Activity -->
+    <string name="instruction_pull_down_to_refresh">PULL DOWN TO REFRESH</string>
+    <string name="instruction_pull_up_to_mark_all_as_read">PULL UP TO MARK ALL AS READ</string>
+    <string name="instruction_slide_right_to_select_channels">SLIDE RIGHT TO SELECT CHANNELS</string>
+    <string name="instruction_click_to_show_menu">CLICK TO SHOW MENU</string>
+    <string name="instruction_expand_to_filter_feeds">EXPAND TO FILTER FEEDS</string>
+    <string name="instruction_go_back">GO BACK TO LIST</string>
+    <string name="instruction_share">SHARE WEB LINK</string>
+    <string name="instruction_zoom_image">ZOOM IMAGE IF EXISTS</string>
+    <string name="instruction_switch_cards">SWITCH BETWEEN CARDS</string>
+    <string name="instruction_switch_feeds">SWIPE TO BROWSE FEEDS</string>
+    <string name="instruction_open_webpage">OPEN WEB PAGE</string>
 
 </resources>

@@ -81,6 +81,7 @@ class FeedDetailsActivity extends SherlockFragmentActivity with UndoBarListener 
 	private def setCurrentItemInPager = {
 		val currentItemPosition = getIntent.getIntExtra(FeedsListFragment.FLAG_POSITION, 1)
 		viewPager.setCurrentItem(currentItemPosition)
+		markFeedAsRead(currentItemPosition)
 	}
 
 	private def showUndoBar() = {
