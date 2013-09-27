@@ -85,7 +85,6 @@ public class SplashScreenActivity extends Activity {
 	private void showInstructionOnFirstRun() {
 		ApplicationObject application = (ApplicationObject) getApplication();
 		if (application.isFirstRun()) {
-			application.setFirstRun();
 			startActivity(getInstructionActivityIntent());
 		}
 	}

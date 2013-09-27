@@ -18,71 +18,76 @@ import FeedsListActivity._
 import com.actionbarsherlock.view.Window
 
 object FeedsListActivity {
-	final lazy val NEW_API = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB
+  final lazy val NEW_API = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB
 }
 
 class FeedsListActivity extends SlidingFragmentActivity with OnMenuListActionListener {
-	private lazy val application = getApplication.asInstanceOf[ApplicationObject]
-	private lazy val fragmentManager = getSupportFragmentManager
-	private lazy val feedsListFragment = fragmentManager.findFragmentById(R.id.feed_list_fragment).asInstanceOf[FeedsListFragment]
-	private lazy val slidingMenuFragment = new SlideMenuFragment
-	private lazy val menuFragment =
-		if (NEW_API)
-			(new ListMenuFragmentHC().setOnMenuActionListener(this))
-		else
-			(new ListMenuFragmentGB().setOnMenuActionListener(this))
+  private lazy val application = getApplication.asInstanceOf[ApplicationObject]
+  private lazy val fragmentManager = getSupportFragmentManager
+  private lazy val feedsListFragment = fragmentManager.findFragmentById(R.id.feed_list_fragment).asInstanceOf[FeedsListFragment]
+  private lazy val slidingMenuFragment = new SlideMenuFragment
+  private lazy val menuFragment =
+    if (NEW_API)
+      (new ListMenuFragmentHC().setOnMenuActionListener(this))
+    else
+      (new ListMenuFragmentGB().setOnMenuActionListener(this))
 
-	override def onCreate(savedInstanceState: Bundle) = {
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS)
-		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_feeds_list)
-		setBehindContentView(R.layout.menu_frame)
-		configureSlidingMenu
-		configureActionBar
-	}
+  override def onCreate(savedInstanceState: Bundle) = {
+    requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS)
+    super.onCreate(savedInstanceState)
 
-	override def onResume = {
-		super.onResume
-		reloadList
-	}
+    setContentView(R.layout.activity_feeds_list)
+    setBehindContentView(R.layout.menu_frame)
+    configureSlidingMenu
+    configureActionBar
 
-	def reloadList = feedsListFragment restartLoader
-	def updateUnreadCount = slidingMenuFragment.updateUnreadCount
+    application.setFirstRun
+  }
 
-	private def configureSlidingMenu = {
-		val fragmentTransaction = fragmentManager.beginTransaction
-		fragmentTransaction.replace(R.id.menu_frame, slidingMenuFragment)
-		fragmentTransaction commit
-	}
+  override def onResume = {
+    super.onResume
+    reloadList
+  }
 
-	private def configureActionBar = {
-		val actionBar = getSupportActionBar
-		actionBar setHomeButtonEnabled (true)
-		actionBar setIcon (R.drawable.ic_menu)
-		setSlidingActionBarEnabled(true)
-		setSupportProgressBarIndeterminateVisibility(true)
-	}
+  def reloadList = feedsListFragment restartLoader
+  def updateUnreadCount = slidingMenuFragment.updateUnreadCount
 
-	override def onOptionsItemSelected(item: MenuItem) = {
-		item.getItemId match {
-			case android.R.id.home => showMenu
-			case R.id.menu_list_moreover => menuFragment.show(fragmentManager, "menu")
-			case _ =>
-		}
+  private def configureSlidingMenu = {
+    val fragmentTransaction = fragmentManager.beginTransaction
+    fragmentTransaction.replace(R.id.menu_frame, slidingMenuFragment)
+    fragmentTransaction commit
+  }
 
-		true
-	}
+  private def configureActionBar = {
+    val actionBar = getSupportActionBar
+    actionBar setHomeButtonEnabled (true)
+    actionBar setIcon (R.drawable.ic_menu)
+    setSlidingActionBarEnabled(true)
 
-	override def notifyMenuRefresh = feedsListFragment.notifyMenuRefresh
-	override def notifyMenuMarkAllAsRead = feedsListFragment.notifyMenuMarkAllAsRead
+    if (application.isFirstRun && application.isConnectedToInternet)
+      setSupportProgressBarIndeterminateVisibility(true)
+  }
 
-	override def onKeyDown(keyCode: Int, event: KeyEvent) = {
-		if (keyCode == KeyEvent.KEYCODE_MENU) toggle
-		super.onKeyDown(keyCode, event);
-	}
+  override def onOptionsItemSelected(item: MenuItem) = {
+    item.getItemId match {
+      case android.R.id.home => showMenu
+      case R.id.menu_list_moreover => menuFragment.show(fragmentManager, "menu")
+      case _ =>
+    }
 
-	override def onDestroy = {
-		super.onDestroy
-		application.performCleanUp
-	}
+    true
+  }
+
+  override def notifyMenuRefresh = feedsListFragment.notifyMenuRefresh
+  override def notifyMenuMarkAllAsRead = feedsListFragment.notifyMenuMarkAllAsRead
+
+  override def onKeyDown(keyCode: Int, event: KeyEvent) = {
+    if (keyCode == KeyEvent.KEYCODE_MENU) toggle
+    super.onKeyDown(keyCode, event);
+  }
+
+  override def onDestroy = {
+    super.onDestroy
+    application.performCleanUp
+  }
 }

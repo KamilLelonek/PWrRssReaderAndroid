@@ -81,7 +81,9 @@ public class ServiceManager
 		if (isAutoRefreshEnabled()) {
 			setDownloadUpdateRequest();
 		}
-		handler.postDelayed(startServiceRunnable, DELAY);
+		if (applicationObject.isFirstRun()) {
+			handler.postDelayed(startServiceRunnable, DELAY);
+		}
 	}
 	
 	private boolean isAutoRefreshEnabled() {
